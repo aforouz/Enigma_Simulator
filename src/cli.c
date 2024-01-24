@@ -1,13 +1,9 @@
 ///////////////////////////////////////////////////////////
 //////////// | This part is not completed yet | ////////////
 ///////////////////////////////////////////////////////////
+#include "config.h"
+//included in "config.h"(main header)
 
-#include <errno.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 
 const char *stages[10] = {
     "Input", "Plugin", "Rotor1", "Rotor2", "Rotor3", "Reflector", "Rotor3", "Rotor2", "Rotor1", "Plugin"

@@ -15,13 +15,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <stdbool.h>
+#include <dirent.h>
+#include <time.h>
+#include <errno.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+#define SIZE 101
+#define BUFFER_SIZE 1024
 
 
 
 
-// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-//                      Rotor_Data_Type
-// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                                Rotor_Data_Type
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //   Each Rotor needs the defined properties in this struct...
 struct Rotor
 // @title:  Rotor data type decleration... 
@@ -99,6 +108,8 @@ char PlugBoard(char c, char arr[]);
 void Config();
 
 
+
+
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                          MORSE_CODE_HEADER
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -154,6 +165,35 @@ const char* morse_to_char(const char*);
 int morse_to_index(const char*);
 
 //--------------------------------------
+
+
+
+
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                          LOGGING_CODE_HEADER
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+                       //DECLARATIONS MADE BY P.AMINPOUR
+enum Level {
+    INFO, // 0
+    WARNING, // 1                               
+    ERROR //2
+};
+
+enum Level level_number(int _lvl) {
+    return _lvl;
+};
+
+struct LogStruct {
+    char _date[SIZE];
+    char _time[SIZE];
+    char _file_name[SIZE];
+    char _stage[SIZE];
+    char _input[SIZE];
+    char _output[SIZE];
+    enum Level _level;
+};
+
 #endif//Enjoy the comment system
 //thanks Solidity :D  
 

@@ -1,36 +1,8 @@
 // should be logged in this format:
 //	<Timestamp-LogLevel-Source-Message(result)-StackTrace>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <dirent.h>
-#include <time.h>
 
-// Adding this section to a header file
-#define SIZE 101
-#define BUFFER_SIZE 1024
-
-
-enum Level {
-	INFO, // 0
-	WARNING, // 1
-	ERROR //2
-};
-
-enum Level level_number(int _lvl) {
-	return _lvl;
-};
-
-struct LogStruct {
-	char _date[SIZE];
-	char _time[SIZE];
-	char _file_name[SIZE];
-	char _stage[SIZE];
-	char _input[SIZE];
-	char _output[SIZE];
-	enum Level _level;
-};
+#include "config.h"
+// declarations included in config.h(main header)
 
 
 enum Level project_status_check(char *input, char *output) {
