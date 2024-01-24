@@ -1,10 +1,20 @@
-//// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+= decleartions
+//       """ Talk is cheap ; show me the code!!! """
+ 
+//                -Linus Torvalds     
+
+//// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+==+=+==+=+=
+//                                        MAIN_HEADER
+//// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+==+=+==+=+=
+
+#pragma once
+
 #ifndef configuration
 #define configuration
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
+#include <assert.h>
 
 
 
@@ -58,9 +68,9 @@ char ArrPlug[26] = {'N', 'B', 'C', 'D', 'F', 'E', 'H', 'G', 'K', 'J', 'I', 'L', 
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-//                     Function_Prototypes
+//                 Function_Prototypes _Enigma.c
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-//                   i.e. : func declerations
+//           i.e. : func declerations used in enigma.c
 
 
 // The RotorInit function will initialize each rotor as we intend to do...
@@ -89,7 +99,61 @@ char PlugBoard(char c, char arr[]);
 void Config();
 
 
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                          MORSE_CODE_HEADER
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+// IMPORTANT NOTE : USEFUL INFORMATION IS IN "MorseCode.c"
 
+
+// These dot and line combo's are morse code configuration
+static const char* CHAR_TO_MORSE[128] = {
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
+        "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
+        "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
+        "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
+        ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+        "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
+        ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
+        "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+};
+
+static const char* MORSE_TO_CHAR[128] = {
+        NULL, NULL, "E", "T", "I", "N", "A", "M",
+        "S", "D", "R", "G", "U", "K", "W", "O",
+        "H", "B", "L", "Z", "F", "C", "P", NULL,
+        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
+        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
+        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
+        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
+        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
+        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
+        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
+        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
+        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+};
+
+
+
+//-----------------------------------
+//func_prototypes used in MorseCode.c
+//-----------------------------------
+const char* char_to_morse(char);
+const char* morse_to_char(const char*);
+int morse_to_index(const char*);
+
+//--------------------------------------
 #endif//Enjoy the comment system
 //thanks Solidity :D  
 
