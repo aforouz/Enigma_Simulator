@@ -49,7 +49,7 @@
 //       #1         morse_to_index
 //+=+=+=+=+=+=+=++=+=+=+=+=+=+=++=+=+=+=+=+=+=++=+=+=+
 //    NOTE1 :: You will not use this function anywhere
-//             Therefore no explation needed
+//             Therefore no explanation needed
 // 
 //             It is written for the sake of clean code
 //             By procces the morse code
