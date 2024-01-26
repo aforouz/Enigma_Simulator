@@ -1,5 +1,6 @@
 #include "config.h"
 
+
 int IndexOf(char c, char arr[])
 {
     for (int i = 0; i < 26; i++)

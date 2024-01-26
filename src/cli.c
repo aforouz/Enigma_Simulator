@@ -6,7 +6,7 @@
 
 
 const char *stages[10] = {
-    "Input", "Plugin", "Rotor1", "Rotor2", "Rotor3", "Reflector", "Rotor3", "Rotor2", "Rotor1", "Plugin"
+    "Input", "Plugin1", "Rotor1", "Rotor2", "Rotor3", "Reflector", "Rotor3", "Rotor2", "Rotor1", "Plugin2"
 };
 
 void splitter() {

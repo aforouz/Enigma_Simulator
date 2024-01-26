@@ -26,7 +26,15 @@
 #define BUFFER_SIZE 1024
 
 
-
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                                Global Variable
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+// will be decalared as false when the machine turns off and vise versa.
+// @notice: it allows us to use pauseable design pattern too.
+// NOTE: don't change this variable directly. just via its function:`change_mode`.
+// #ifndef machine_mode 
+extern bool machine_mode;
+// #endif
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                                Rotor_Data_Type
@@ -106,6 +114,11 @@ char PlugBoard(char c, char arr[]);
 
 // This function is used to configure the Rotors and the Plugboard, to encode or decode a letter...
 void Config();
+
+// @notice: Use this function during the Enigma algorithm workflow when you reach to the 
+//   last section of encryption. (for log/config handling).
+//     It will change the global `is_last_operation` variable in did.
+void change_mode();
 
 
 
