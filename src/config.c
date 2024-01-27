@@ -130,7 +130,9 @@ void rotorinit(Rotor *rotor_array)
         break;
     }
 
-    int a, b, c, fisrt, second;
+    int a, b, c;
+    int fisrt, second;
+    int position_r1, position_r2, position_r3;
     char second_shift_char, third_shift_char;
 
     printf("Which rotors do you want to pick? (enter 3 numbers between 1 and %d): ", n+1);
@@ -141,6 +143,15 @@ void rotorinit(Rotor *rotor_array)
 
     printf("And second: ");
     scanf("%d", &second);
+
+    printf("OK, now enter the number position of the first rotor: ");
+    scanf("%d", position_r1);
+
+    printf("OK, now enter the number position of the second rotor: ");
+    scanf("%d", position_r2);
+
+    printf("OK, now enter the number position of the third rotor: ");
+    scanf("%d", position_r3);
 
     printf("Now enter the shift character for the second rotor: ");
     scanf(" %c", &second_shift_char);
