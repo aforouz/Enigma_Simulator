@@ -14,7 +14,7 @@ int indexof(char c, char arr[])
     }
 }
 
-int pre_reflector(Rotor *rotor, int input, char InputChar)
+int pre_reflector(Rotor *rotor, int input, char InputChar, int check)
 {
     if ((*rotor).ShiftChar == InputChar)
     {
@@ -33,7 +33,7 @@ int pre_reflector(Rotor *rotor, int input, char InputChar)
     return ((*rotor).ArrRotor[input] - 65) - (*rotor).Position;
 }
 
-int post_reflector(Rotor *rotor, int input)
+int post_reflector(Rotor *rotor, int input, int check)
 {
     if (input + (*rotor).Position < 0)
     {
@@ -47,13 +47,13 @@ int post_reflector(Rotor *rotor, int input)
     return indexof(input + 65, (*rotor).ArrRotor) - (*rotor).Position;
 }
 
-char plugboard(char c, char arr[])
+char plugboard(char c, char arr[], int check)
 {
     return arr[c - 65];
 }
 
 
-void rotorinit(int p,char C , char array[])
+void rotorinit(Rotor *rotor_array)
 {
     size_t n = 5;
     Rotor *default_rotors;
@@ -129,5 +129,23 @@ void rotorinit(int p,char C , char array[])
     default:
         break;
     }
+
+    int a, b, c, fisrt, second;
+    char second_shift_char, third_shift_char;
+
+    printf("Which rotors do you want to pick? (enter 3 numbers between 1 and %d): ", n+1);
+    scanf("%d %d %d", &a, &b, &c);
+
+    printf("Which of these rotors do you want to pick first? (enter that rotors number): ");
+    scanf("%d", &fisrt);
+
+    printf("And second: ");
+    scanf("%d", &second);
+
+    printf("Now enter the shift character for the second rotor: ");
+    scanf(" %c", &second_shift_char);
+
+    printf("And the shift character for the third rotor: ");
+    scanf(" %c", &third_shift_char);
 
 }

@@ -82,7 +82,7 @@ Rotor RotorsArr[4];
 
 
 // not implemented yet
-void rotorinit(int P, char C, char array[]);
+void rotorinit(Rotor *rotor_array);
 
 
 
@@ -97,7 +97,7 @@ int indexof(char c, char arr[]);
 // @param InputChar specifies wethear the rotor needs to shift or not
 // @param check tells the function wethear to print the output or not
 // @returns The ASCII number of the rotors output character minus rotor's position
-int pre_reflector(Rotor *rotor, int Input, char InputChar);
+int pre_reflector(Rotor *rotor, int Input, char InputChar, int check);
 
 // @note After passing the reflector, it is time to go back through the rotors
 // @dev Is there anyway to call the rotors more efficiently?
@@ -105,10 +105,14 @@ int pre_reflector(Rotor *rotor, int Input, char InputChar);
 // @param Input is the output of the previous rotor or reflector
 // @param check tells the function wethear to print the output or not
 // @returns The ASCII number of the rotors output character, minus rotor's position
-int post_reflector(Rotor *rotor, int input);
+int post_reflector(Rotor *rotor, int input, int check);
 
-// plugboard is called twice: Once after the character is typed and once after looping through and back the rotors...
-char plugboard(char c, char arr[]);
+// @note First, user's input goes to this function to get checked in the ArrPlug array
+// @param c is the user-input character
+// @param arr[] is the ArrPlug assinged previously
+// @param check tells the function wethear to print the output or not
+// @returns The ASCII number of character which was 'connected' to the input character in plugboard
+char plugboard(char c, char arr[], int check);
 
 // This function is used to configure the Rotors and the plugboard, to encode or decode a letter...
 void config();
