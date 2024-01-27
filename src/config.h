@@ -21,6 +21,11 @@
 #include <errno.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <regex.h>
+
+// with -lcurl lib option while you compiling.
+// i.e. gcc requests.c -lcurl
+#include <curl/curl.h>
 
 #define SIZE 101
 #define BUFFER_SIZE 1024
