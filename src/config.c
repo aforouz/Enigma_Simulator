@@ -1,5 +1,19 @@
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//                          config.c
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//co-authored.contains variable initialization and function exact
+//declarations 
+
 #include "config.h"
 
+
+
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ENIGMA.c
+
+
+//variables getting initialized
+//these are marked with extern in the header file, used in enigma.c ...
 char ArrPlug[26] = {'N', 'B', 'C', 'D', 'F', 'E', 'H', 'G', 'K', 'J', 'I', 'L', 'M', 'A', 'O', 'P', 'Z', 'X', 'S', 'T', 'U', 'V', 'W', 'R', 'Y', 'Q'};
 
 Rotor RotorsArr[4] = {0, 'n', {'A', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'Y', 'T'}};
@@ -53,24 +67,29 @@ char plugboard(char c, char arr[], int check)
 }
 
 
-void rotorinit(Rotor *rotor_array)
+
+void rotorinit(Rotor *rotor_array)//IMPORTANT : Adding or removing a rotor
 {
     size_t n = 5;
     Rotor *default_rotors;
 
     default_rotors = (Rotor*)calloc(n, (sizeof(Rotor)));
 
+//This version has five rotors and the user can either pick one or manually build one.... .
+
+//A sample of five rotors pre-initialized..
     Rotor r1 = {1, 'A', {'C', 'X', 'F', 'G', 'E', 'V', 'A', 'H', 'N', 'M', 'B', 'D', 'L', 'K', 'P', 'O', 'Z', 'T', 'Q', 'J', 'I', 'W', 'S', 'R', 'U', 'Y'}};
     Rotor r2 = {1, 'A', {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}};
     Rotor r3 = {1, 'A', {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'}};
     Rotor r4 = {1, 'A', {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'}};
     Rotor r5 = {1, 'A', {'V', 'Z', 'B', 'R', 'G', 'I', 'T', 'Y', 'U', 'P', 'S', 'D', 'N', 'H', 'L', 'X', 'A', 'W', 'M', 'J', 'Q', 'O', 'F', 'E', 'C', 'K'}};
 
-    default_rotors[0] = r1;
-    default_rotors[1] = r2;
-    default_rotors[2] = r3;
-    default_rotors[3] = r4;
-    default_rotors[4] = r5;
+//we cant access the arguments within a struct directly so we use strcpy
+    strcpy(default_rotors[0],r1);
+    strcpy(default_rotors[1],r2);
+    strcpy(default_rotors[2],r3);
+    strcpy(default_rotors[3],r4);
+    strcpy(default_rotors[4],r5);
 
 
     int user_input = 2;
@@ -79,8 +98,9 @@ void rotorinit(Rotor *rotor_array)
 
     switch (user_input)
     {
-        //1 is for adding
-        //2 is for removing
+        //0 is for adding
+        //1 is for removing
+        //2 is for quit/exit
     case (0):
         //adding a rotor
     {
@@ -92,7 +112,7 @@ void rotorinit(Rotor *rotor_array)
             char c;
             printf("%c", i+65);
             scanf(" %c", &c);
-            while (!(65 <= c+65 && c+65 <= 90))
+            while (!(65 <= c+65 && c+65 <= 90))// As long as the input is not valid continue this cycle
             {
                 printf("%c: ", i+65);
                 scanf(" %c", &c);
@@ -101,8 +121,10 @@ void rotorinit(Rotor *rotor_array)
             new_rotor_arr[i] = c;
         }
         Rotor new_rotor = {1, 'A', *new_rotor_arr};
-        default_rotors = (Rotor*)realloc(default_rotors, n+1);
-        default_rotors[n+1] = new_rotor;
+
+        default_rotors = (Rotor*)realloc(default_rotors, n+1);//adding another memory portion for default rotors
+
+        strcpy(default_rotors[n+1],new_rotor);//strcpy 
 
         break;
     }
@@ -121,12 +143,13 @@ void rotorinit(Rotor *rotor_array)
         }
 
         Rotor *null_rotor = NULL;
-        default_rotors[index] = *null_rotor;
+        strcpy(default_rotors[index],*null_rotor);
 
         break;
     }
 
     default:
+        printf("\nThe entry was not valid\n");
         break;
     }
 
@@ -206,3 +229,4 @@ const char* MORSE_TO_CHAR[128] = {
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 };
 
+//End of file
