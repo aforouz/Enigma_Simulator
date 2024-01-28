@@ -71,7 +71,7 @@ We are freshman students at ["Isfahan University of Technology"](https://english
 
 This is a school project and our group members are :
 - [A.Frouzandeh(manager)](https://github.com/aforouz/)
-- [M.Kazemeini](https://github.com/M-H-K-ir)
+- [M.Kazemainy](https://github.com/M-H-K-ir)
 - [P.Aminpoor](https://github.com/ParsaAminpour)
 - [M.Ebrahimian](https://github.com/m0ebraahim)
 - [A.Ahmadi](https://github.com/Wolfe1729)
