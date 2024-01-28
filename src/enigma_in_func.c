@@ -86,10 +86,13 @@ int BackRotorCall(Rotor *rotor, int input)
 }
 
 //Function i wrote :
-const char* enigma_in_func(char *c)
+// #define DEBUG_OUTPUT 
+char* enigma_in_func(char *c, int _n)
 {
     int i = 0 ;
-     for (int i = 0; c[i]; i++)
+    char *encypted_data = (char*) malloc(_n * sizeof(char));
+
+    for (int i = 0; c[i]; i++)
     {
         int out = ThroughRotorCall(&R1, c[i]-65, 'a');
         int out2 = ThroughRotorCall(&R2, out, R1.ArrRotor[R1.Position]);
@@ -106,20 +109,25 @@ const char* enigma_in_func(char *c)
         {
             back3 %= 26;
         }
+        #ifdef DEBUG_OUTPUT
         printf("%c", back3+65);
+        #endif
+
+        encypted_data[i] = back3+65;
     }
-    return 0;
+    return encypted_data;
 }
 
 //Usage example
 
 // in another file we have:
 
-//#include "enigma_in_func.c"
-//int main(void)
-//{
-//    char array[100]  = {'A','A'};
+// #define SIZE 2048
+// //#include "enigma_in_func.c"
+// int main(void)
+// {
+//    char array[SIZE]  = {'A','A'};
 //    puts(enigma_in_func(array));
 //    return 0;
 
-//}OUTPUT IN KONSOLE : FT
+// }
