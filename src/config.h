@@ -56,7 +56,7 @@ struct Rotor
 };
 typedef struct Rotor Rotor;//unpro naming but anyway we call our instances "Rotor" 
 
-Rotor RotorsArr[4];
+extern Rotor RotorsArr[4];
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                       PLUG_IN_PORTS
@@ -74,7 +74,7 @@ Rotor RotorsArr[4];
 
 
 // moved to  "config.c"
-
+extern char ArrPlug[26];
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                 Function_Prototypes _Enigma.c
