@@ -20,6 +20,7 @@
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
+#include <ctype.h>
 
 #define SIZE 101
 #define BUFFER_SIZE 1024
@@ -72,7 +73,7 @@ Rotor RotorsArr[4];
 //          much further...
 
 
-
+// moved to  "config.c"
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -130,45 +131,49 @@ void change_mode();
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 // IMPORTANT NOTE : USEFUL INFORMATION IS IN "MorseCode.c"
 
+extern const char* CHAR_TO_MORSE[128];//defined in config.c
+extern const char* MORSE_TO_CHAR[128];//defined in config.c
+
+// In the config.c we have :
 
 // These dot and line combo's are morse code configuration
-static const char* CHAR_TO_MORSE[128] = {
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
-        "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
-        "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
-        "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
-        ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
-        "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
-        ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
-        "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-};
+// const char* CHAR_TO_MORSE[128] = {
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
+//        "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
+//        "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
+//        "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
+//        ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+//        "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
+//        ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
+//        "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//};
 
-static const char* MORSE_TO_CHAR[128] = {
-        NULL, NULL, "E", "T", "I", "N", "A", "M",
-        "S", "D", "R", "G", "U", "K", "W", "O",
-        "H", "B", "L", "Z", "F", "C", "P", NULL,
-        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
-        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
-        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
-        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
-        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
-        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
-        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
-        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
-        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
-};
+//const char* MORSE_TO_CHAR[128] = {
+//        NULL, NULL, "E", "T", "I", "N", "A", "M",
+//        "S", "D", "R", "G", "U", "K", "W", "O",
+//        "H", "B", "L", "Z", "F", "C", "P", NULL,
+//        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
+//        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
+//        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
+//        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
+//        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
+//        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
+//        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
+//        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
+//        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+//};
 
 
 

@@ -160,3 +160,49 @@ void rotorinit(Rotor *rotor_array)
     scanf(" %c", &third_shift_char);
 
 }
+
+
+//************************************
+//     morse code initializations
+//************************************
+
+//declaration is in the header file "config.h" but the initialization is here
+
+const char *CHAR_TO_MORSE[128] = {
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
+            "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
+            "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
+            "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
+            ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+            "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
+            ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
+            "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    };
+
+const char* MORSE_TO_CHAR[128] = {
+        NULL, NULL, "E", "T", "I", "N", "A", "M",
+        "S", "D", "R", "G", "U", "K", "W", "O",
+        "H", "B", "L", "Z", "F", "C", "P", NULL,
+        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
+        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
+        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
+        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
+        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
+        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
+        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
+        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
+        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
+        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+};
+
