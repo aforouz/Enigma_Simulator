@@ -1,5 +1,11 @@
 #include "config.h"
 
+
+
+// managing IPFS-Pinata functionality such as add-remove data to the IPFS file with a specific CID.
+
+
+
 // I had to got this Regex pattern from the StackOverflow. We could have a better Regex pattern.
 const char *re_pattern = "^(https?|ftp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
@@ -71,6 +77,14 @@ void request(char *_url)
 	return;
 }
 
+
+bool add_new_encrypted_data(char *_data) {
+	return true;
+}
+
+bool check_user_available(char *_encrypted_data) {
+	return true;
+}
 
 // NOTE: This is just a sample of the requests.c workflow and should be deleted in the production phase.
 int main() {
