@@ -20,12 +20,15 @@
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
+
 #include <stdbool.h>
 #include <regex.h>
 
 // with -lcurl lib option while you compiling.
 // i.e. gcc requests.c -lcurl
 #include <curl/curl.h>
+#include <ctype.h>
+
 
 #define SIZE 101
 #define BUFFER_SIZE 1024
@@ -44,15 +47,16 @@ extern bool machine_mode;
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                                Rotor_Data_Type
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-//   Each Rotor needs the defined properties in this struct...
-struct Rotor
 // @title:  Rotor data type decleration... 
 // @author: Mohammad Siamaki
 // @notice: This struct can be modified later... .
 // @dev   : every Rotor has a starting position called "position",
 //          an indicator for shifting called "ShiftChar",
 //          and values on the out put i.e "ArrRotor"... .
-//@custom : we assume that the reflector is a constant rotor so we have 4 rotors
+// @custom : we assume that the reflector is a constant rotor so we have 4 rotors
+// @note A simulation for rotors of machine
+// @dev A replacement for a struct could be more efficient
+struct Rotor
 {
     int Position;
     char ShiftChar;
@@ -60,15 +64,7 @@ struct Rotor
 };
 typedef struct Rotor Rotor;//unpro naming but anyway we call our instances "Rotor" 
 
-
-Rotor RotorsArr[4] = {{4, 'a', {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}},
-                      {26, 'A', {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'}},
-                      {14, 'C', {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'}},
-                      {0, 'n', {'A', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'Y', 'T'}}};
-
-
-
-
+extern Rotor RotorsArr[4];
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                       PLUG_IN_PORTS
@@ -84,10 +80,9 @@ Rotor RotorsArr[4] = {{4, 'a', {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z'
 //          in physical world we cant do so,meaning we can take this simu 
 //          much further...
 
-char ArrPlug[26] = {'N', 'B', 'C', 'D', 'F', 'E', 'H', 'G', 'K', 'J', 'I', 'L', 'M', 'A', 'O', 'P', 'Z', 'X', 'S', 'T', 'U', 'V', 'W', 'R', 'Y', 'Q'};
 
-
-
+// moved to  "config.c"
+extern char ArrPlug[26];
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                 Function_Prototypes _Enigma.c
@@ -95,30 +90,41 @@ char ArrPlug[26] = {'N', 'B', 'C', 'D', 'F', 'E', 'H', 'G', 'K', 'J', 'I', 'L', 
 //           i.e. : func declerations used in enigma.c
 
 
-// The RotorInit function will initialize each rotor as we intend to do...
-//for initializing  the rotor individual we use the func below... .
-//does not return anything  
-//stands for "position"
-//C for "Shift Char"
-//array for output values
-void Rotorinit(int P, char C, char array[]);
+// not implemented yet
+void rotorinit(Rotor *rotor_array);
 
 
 
-// IndexOf returns the index of an element in an array...
-int IndexOf(char c, char arr[]);
+// @param c is a character
+// @param arr[] is an array of characters
+// @returns The index of a character in the array passed to it (arr[])
+int indexof(char c, char arr[]);
 
-// ThroughRotorCall, does the math required to calculate the output character of the specified rotor...
-int ThroughRotorCall(Rotor *rotor, int Input, char InputChar);
+// @note The input character goes here after the plugboard
+// @param rotor is the rotor instructed to be used in the machine
+// @param Input is the output of the previous rotor or plugboard
+// @param InputChar specifies wethear the rotor needs to shift or not
+// @param check tells the function wethear to print the output or not
+// @returns The ASCII number of the rotors output character minus rotor's position
+int pre_reflector(Rotor *rotor, int Input, char InputChar, int check);
 
-// BackRotorCall goes back from the reflector to the first rotor...
-int BackRotorCall(Rotor *rotor, int input);
+// @note After passing the reflector, it is time to go back through the rotors
+// @dev Is there anyway to call the rotors more efficiently?
+// @param rotor is the rotor instructed to be used in the machine
+// @param Input is the output of the previous rotor or reflector
+// @param check tells the function wethear to print the output or not
+// @returns The ASCII number of the rotors output character, minus rotor's position
+int post_reflector(Rotor *rotor, int input, int check);
 
-// PlugBoard is called twice: Once after the character is typed and once after looping through and back the rotors...
-char PlugBoard(char c, char arr[]);
+// @note First, user's input goes to this function to get checked in the ArrPlug array
+// @param c is the user-input character
+// @param arr[] is the ArrPlug assinged previously
+// @param check tells the function wethear to print the output or not
+// @returns The ASCII number of character which was 'connected' to the input character in plugboard
+char plugboard(char c, char arr[], int check);
 
-// This function is used to configure the Rotors and the Plugboard, to encode or decode a letter...
-void Config();
+// This function is used to configure the Rotors and the plugboard, to encode or decode a letter...
+void config();
 
 // @notice: Use this function during the Enigma algorithm workflow when you reach to the 
 //   last section of encryption. (for log/config handling).
@@ -133,45 +139,49 @@ void change_mode();
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 // IMPORTANT NOTE : USEFUL INFORMATION IS IN "MorseCode.c"
 
+extern const char* CHAR_TO_MORSE[128];//defined in config.c
+extern const char* MORSE_TO_CHAR[128];//defined in config.c
+
+// In the config.c we have :
 
 // These dot and line combo's are morse code configuration
-static const char* CHAR_TO_MORSE[128] = {
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
-        "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
-        "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
-        "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
-        ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
-        "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
-        ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
-        "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-};
+// const char* CHAR_TO_MORSE[128] = {
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
+//        "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
+//        "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
+//        "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
+//        ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+//        "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
+//        ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
+//        "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+//};
 
-static const char* MORSE_TO_CHAR[128] = {
-        NULL, NULL, "E", "T", "I", "N", "A", "M",
-        "S", "D", "R", "G", "U", "K", "W", "O",
-        "H", "B", "L", "Z", "F", "C", "P", NULL,
-        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
-        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
-        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
-        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
-        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
-        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
-        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
-        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
-        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
-};
+//const char* MORSE_TO_CHAR[128] = {
+//        NULL, NULL, "E", "T", "I", "N", "A", "M",
+//        "S", "D", "R", "G", "U", "K", "W", "O",
+//        "H", "B", "L", "Z", "F", "C", "P", NULL,
+//        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
+//        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
+//        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
+//        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
+//        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
+//        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
+//        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
+//        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
+//        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
+//        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
+//        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+//};
 
 
 

@@ -30,7 +30,7 @@
 
 //this section will be modified later
 
-#include <ctype.h>
+
 #include "config.h"
 
 
