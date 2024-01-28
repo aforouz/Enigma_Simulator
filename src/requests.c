@@ -10,7 +10,7 @@ const char* _getRegexError(int code) {
     	case REG_ECTYPE: return "Invalid character class";
     	case REG_EESCAPE: return "Trailing backslash";
   	}
-  	return "Unknown regex error"; 
+  	return "Unknown regex error";
 }
 
 
@@ -47,7 +47,7 @@ void request(char *_url)
   	curl = curl_easy_init();
 
   	if (curl == NULL)
-  	{
+  	{ 
     	fprintf(stderr, "HTTP request failed\n");
     	exit(-1);
   	}
