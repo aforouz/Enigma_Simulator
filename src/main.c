@@ -11,8 +11,23 @@
 int main(void)
 {
     //##################CLI AND MENU
-    // uwu
 
+    //Show welcome page and ask password
+    login();
+
+    //Select input/output mode
+    int selected_mode=select_mode();
+    switch (selected_mode)
+    {
+        case char_mode
+        break;
+
+        case str_mode
+        break;
+
+        case file_mode
+        break;
+    }
 
     //#################INPUT_OUTPUT
     // uwu

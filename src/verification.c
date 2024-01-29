@@ -172,7 +172,6 @@ bool signin(char *_username, char *_password) {
 		fgets(data, MAX_LEN, fp);
 
 		if (_check_hash(encrypted, data)) {
-			printf("\x1b[32mUser found\n");
 			fclose(fp);
 			return true;
 		}

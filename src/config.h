@@ -20,18 +20,24 @@
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
+#include <conio.h>
 
 #include <stdbool.h>
-#include <regex.h>
+//#include <regex.h>
 
 // with -lcurl lib option while you compiling.
 // i.e. gcc requests.c -lcurl
-#include <curl/curl.h>
+//#include <curl/curl.h>
 #include <ctype.h>
 
 
 #define SIZE 101
 #define BUFFER_SIZE 1024
+
+//for modes
+#define char_mode 1
+#define str_mode 2
+#define file_mode 3
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -83,6 +89,30 @@ extern Rotor RotorsArr[4];
 
 // moved to  "config.c"
 extern char ArrPlug[26];
+
+
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                 Function_Prototypes _login.c
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//           i.e. : func declerations used in login.c
+
+
+//MUST BE CALLED BEFORE EVERYTHING TO ACCESS SIMULATOR
+void login();
+
+
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                 Function_Prototypes _mode.c
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//           i.e. : func declerations used in mode.c
+
+
+//MUST BE CALLED FOR SELECTING MODE
+void select_mode();
+
+
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                 Function_Prototypes _Enigma.c
