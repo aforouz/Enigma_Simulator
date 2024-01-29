@@ -11,111 +11,143 @@
 int main(void)
 {
     //##################CLI AND MENU
-
     //Show welcome page and ask password
     login();
 
     //Select input/output mode
     int selected_mode=select_mode();
+
     switch (selected_mode)
     {
-        case char_mode
+
+
+        case (char_mode)
+        {
+
+            size_t n=99999999;, back, i;
+            char *c;
+            c = (char *)malloc(n * sizeof(char));
+
+            printf("\nEnter a single character every time, and press Enter :\n");
+            for (size_t j = 0; j < n; j++)
+            {
+                printf("Enter a character :");
+                scanf(" %c", c + i);
+                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
+            
+                for (i = 1; i < 4; i++)
+                {
+                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+                }
+
+                for (i = 2; i > -1; i--)
+                {
+                    back = post_reflector(&RotorsArr[i], back);
+                }
+
+                if (back < 0)
+                {
+                    back += 26;
+                }
+                else
+                {
+                    back %= 26;
+                }
+                printf("%c\n", plugboard(back + 65, ArrPlug));
+            }
+
         break;
-
-        case str_mode
-        break;
-
-        case file_mode
-        break;
-    }
-
-    //#################INPUT_OUTPUT
-    // uwu
-
-    //#################LOGGING
-    // uwu
+        }
 
 
 
-    //#################CONFIG
+        case (str_mode)
 
-if(log ==NULL || /*The user wanted to change smth in rotors or plugs*/)://if the log was empty
-//first we have to define the rotors we want to work with
-{
-    printf("LOG file not found\n");
-    Rotor RotorsArr[4] = rotorinit();//reflector is defined in config.c
+        {
+
+
+            size_t n=99999999, back, i;
+            char *c;
+            c = (char *)malloc(n+1 * sizeof(char));
+            output_string = (char *)calloc(n+1 , sizeof(char));
+
+            printf("\nEnter your string in one line , without spaces :");
+            gets(c);
+            for (size_t j = 0; j < strlen(c); j++)
+            {
+                // scanf(" %c", c + i);
+                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
+            
+                for (i = 1; i < 4; i++)
+                {
+                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+                }
+
+                for (i = 2; i > -1; i--)
+                {
+                    back = post_reflector(&RotorsArr[i], back);
+                }
+
+                if (back < 0)
+                {
+                    back += 26;
+                }
+                else
+                {
+                    back %= 26;
+                }
+
+                output_string[i] = plugboard(back + 65,ArrPlug);
+                
+            }
+                puts(output_string);
+
+            break;
+        }
+
+
+        case (file_mode)
+        {
+            
+            size_t n=99999999, back, i;
+            char *c;
+            c = (char *)malloc(n+1 * sizeof(char));
+            output_string = (char *)calloc(n+1 , sizeof(char));
+            printf("Put * at the end of your message \n" );
+            c = input();
+            
+            for (size_t j = 0; j < strlen(c); j++)
+            {
+                // scanf(" %c", c + i);
+                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
+            
+                for (i = 1; i < 4; i++)
+                {
+                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+                }
+
+                for (i = 2; i > -1; i--)
+                {
+                    back = post_reflector(&RotorsArr[i], back);
+                }
+
+                if (back < 0)
+                {
+                    back += 26;
+                }
+                else
+                {
+                    back %= 26;
+                }
+
+                output_string[i] = plugboard(back + 65,ArrPlug)
+            }
+            output(output_string);
+            break;
+        }
     
-    //log area start
-    // uwu
-    //log area end
-
-
-
-    //input area start
-    //uwu
-    //input area end
-
-    for (int j = 0; j < n; j++)
-    {
-        
-        back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
-        // printf("%c\n", c[i]);
-        for (i = 1; i < 4; i++)
-        {
-            back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
-        }
-
-        for (i = 2; i > -1; i--)
-        {
-            back = post_reflector(&RotorsArr[i], back);
-        }
-
-        if (back < 0)
-        {
-            back += 26;
-        }
-        else
-        {
-            back %= 26;
-        }
-        return(plugboard(back + 65, ArrPlug));
     }
 
-    // output area start
-    //uwu
-    //output area end
-
-
-    //logging area start
-    //uwu
-    //logging area end
-
-    //cli area start
-    //uwu
-    //cli area end
     return 0;
-
-}//END OF FILE
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+}//END OF FILE

@@ -39,6 +39,9 @@
 #define str_mode 2
 #define file_mode 3
 
+//for file
+FILE *fpt;
+
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                                Global Variable
