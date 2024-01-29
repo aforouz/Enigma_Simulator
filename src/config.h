@@ -90,8 +90,10 @@ extern char ArrPlug[26];
 //           i.e. : func declerations used in enigma.c
 
 
-// not implemented yet
-void rotorinit(Rotor *rotor_array);
+// MUST BE CALLED TO INITIALIZE ROTORS
+//RETURNS AN ARRAY OF THREE ROTORS
+//EXAMPLE: {2,'B',Arrrotor}
+Rotor *rotorinit();
 
 
 
