@@ -16,6 +16,7 @@
 //these are marked with extern in the header file, used in enigma.c ...
 char ArrPlug[26] = {'N', 'B', 'C', 'D', 'F', 'E', 'H', 'G', 'K', 'J', 'I', 'L', 'M', 'A', 'O', 'P', 'Z', 'X', 'S', 'T', 'U', 'V', 'W', 'R', 'Y', 'Q'};
 
+//this is our reflector
 Rotor RotorsArr[4] = {0, 'n', {'A', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'Y', 'T'}};
 
 
@@ -67,13 +68,11 @@ char plugboard(char c, char arr[], int check)
 }
 
 
-
-void rotorinit(Rotor *rotor_array)//IMPORTANT : Adding or removing a rotor
+Rotor * rotorinit()//IMPORTANT : Adding or removing a rotor and return an array of rotors .This function can return rotor_position shift char and array
 {
-    size_t n = 5;
     Rotor *default_rotors;
 
-    default_rotors = (Rotor*)calloc(n, (sizeof(Rotor)));
+    default_rotors = (Rotor*)calloc(5, (sizeof(Rotor)));
 
 //This version has five rotors and the user can either pick one or manually build one.... .
 
@@ -92,7 +91,8 @@ void rotorinit(Rotor *rotor_array)//IMPORTANT : Adding or removing a rotor
     strcpy(default_rotors[4],r5);
 
 
-    int user_input = 2;
+    int user_input = 2;//Interacting with user
+    
     printf("Enter 0 for adding or 1 for removing rotors, if none enter 2: ");
     scanf("%d", &user_input);
 
@@ -101,33 +101,76 @@ void rotorinit(Rotor *rotor_array)//IMPORTANT : Adding or removing a rotor
         //0 is for adding
         //1 is for removing
         //2 is for quit/exit
-    case (0):
-        //adding a rotor
-    {
-        char new_rotor_arr[26];
-        printf("Enter the character you want to connect to:\n");
-        for (int i = 0; i < 26; i++)
+        case (0):
+         //adding a rotor
         {
-
-            char c;
-            printf("%c", i+65);
-            scanf(" %c", &c);
-            while (!(65 <= c+65 && c+65 <= 90))// As long as the input is not valid continue this cycle
+          char new_rotor_arr[26];//array for new rotor
+          printf("Enter the character you want to connect to:\n");
+          for (int i = 0; i < 26; i++)
             {
+
+              char c;
+              printf("%c", i+65);
+              scanf(" %c", &c);
+              while (!(65 <= c+65 && c+65 <= 90))// As long as the input is not valid continue this cycle
+              {
                 printf("%c: ", i+65);
                 scanf(" %c", &c);
+              }
+              new_rotor_arr[i] = c;
             }
+            
+            
 
-            new_rotor_arr[i] = c;
+             Rotor new_rotor = {1, 'A', *new_rotor_arr};
+
+         default_rotors = (Rotor*)realloc(default_rotors, n+1);//adding another memory portion for default rotors
+
+         strcpy(default_rotors[n+1],new_rotor);//strcpy
+         
+         printf("\nnew rotor added...\n");
+
+
+         //chosen_rotor
+         //This model has three rotors
+
+        int a, b, c;
+        int fisrt, second,third;
+        int position_r1, position_r2, position_r3;
+        char second_shift_char, third_shift_char;
+
+        
+        printf("\nWhich of these rotors do you want to pick first? (enter that rotor number): ");
+        scanf("%d", &first);
+        
+        printf("\nWhich of these rotors do you want to pick second? (enter that rotor number): ");
+        scanf("%d", &second);
+
+        
+        printf("\nWhich of these rotors do you want to pick third? (enter that rotor number): ");
+        scanf("%d", &third);
+         
+        printf("\nOK, now enter the number position of the first rotor: ");
+        scanf("%d", position_r1);
+
+        printf("\nOK, now enter the number position of the second rotor: ");
+        scanf("%d", position_r2);
+
+        printf("\nOK, now enter the number position of the third rotor: ");
+        scanf("%d", position_r3);
+
+        printf("\nNow enter the shift character for the second rotor: ");
+        scanf(" %c", &second_shift_char);
+
+        printf("\nAnd the shift character for the third rotor: ");
+        scanf(" %c", &third_shift_char);
+        
+        Rotor chosen_rotors[3] = {{position_r1 , 'A' ,default_rotors[first-1].ArrRotor},
+                                  {position_r2,second_shift_char,default_rotors[second-1].ArrRotor},
+                                  {position_r3,third_shift_char,default_rotors[third-1].ArrRotor}};
+        return(chosen_rotors);//return the rotors that we want to work with
+
         }
-        Rotor new_rotor = {1, 'A', *new_rotor_arr};
-
-        default_rotors = (Rotor*)realloc(default_rotors, n+1);//adding another memory portion for default rotors
-
-        strcpy(default_rotors[n+1],new_rotor);//strcpy 
-
-        break;
-    }
 
     case(1):
     {
@@ -145,46 +188,57 @@ void rotorinit(Rotor *rotor_array)//IMPORTANT : Adding or removing a rotor
         Rotor *null_rotor = NULL;
         strcpy(default_rotors[index],*null_rotor);
 
-        break;
+
+        //chosen_rotor
+         //This model has three rotors
+
+        int a, b, c;
+        int fisrt, second,third;
+        int position_r1, position_r2, position_r3;
+        char second_shift_char, third_shift_char;
+
+        
+        printf("\nWhich of these rotors do you want to pick first? (enter that rotor number): ");
+        scanf("%d", &first);
+        
+        printf("\nWhich of these rotors do you want to pick second? (enter that rotor number): ");
+        scanf("%d", &second);
+
+        
+        printf("\nWhich of these rotors do you want to pick third? (enter that rotor number): ");
+        scanf("%d", &third);
+         
+        printf("\nOK, now enter the number position of the first rotor: ");
+        scanf("%d", position_r1);
+
+        printf("\nOK, now enter the number position of the second rotor: ");
+        scanf("%d", position_r2);
+
+        printf("\nOK, now enter the number position of the third rotor: ");
+        scanf("%d", position_r3);
+
+        printf("\nNow enter the shift character for the second rotor: ");
+        scanf(" %c", &second_shift_char);
+
+        printf("\nAnd the shift character for the third rotor: ");
+        scanf(" %c", &third_shift_char);
+        
+        Rotor chosen_rotors[3] = {{position_r1 , 'A' , default_rotors[first-1].ArrRotor},
+                                  {position_r2 , second_shift_char , default_rotors[second-1].ArrRotor},
+                                  {position_r3 , third_shift_char  ,  default_rotors[third-1].ArrRotor}};
+
+        //return example : {1,'B',Arrrotor}
+        return (chosen_rotors);//return the rotors that we want to work with
     }
 
-    default:
-        printf("\nThe entry was not valid\n");
-        break;
+
+       default:
+        {
+         printf("\nNo change in rotors ,exit.\n");
+         break;
+        }
     }
-
-    int a, b, c;
-    int fisrt, second;
-    int position_r1, position_r2, position_r3;
-    char second_shift_char, third_shift_char;
-
-    printf("Which rotors do you want to pick? (enter 3 numbers between 1 and %d): ", n+1);
-    scanf("%d %d %d", &a, &b, &c);
-
-    printf("Which of these rotors do you want to pick first? (enter that rotors number): ");
-    scanf("%d", &fisrt);
-
-    printf("And second: ");
-    scanf("%d", &second);
-
-    printf("OK, now enter the number position of the first rotor: ");
-    scanf("%d", position_r1);
-
-    printf("OK, now enter the number position of the second rotor: ");
-    scanf("%d", position_r2);
-
-    printf("OK, now enter the number position of the third rotor: ");
-    scanf("%d", position_r3);
-
-    printf("Now enter the shift character for the second rotor: ");
-    scanf(" %c", &second_shift_char);
-
-    printf("And the shift character for the third rotor: ");
-    scanf(" %c", &third_shift_char);
-
 }
-
-
 //************************************
 //     morse code initializations
 //************************************
