@@ -25,24 +25,24 @@ int main(void)
 {
     int n, back, i;
     char *c;
-    c = (char *)malloc(n * sizeof(char));
     scanf("%d", &n);
+    c = (char *)malloc(n * sizeof(char));
 
 
 
     for (int j = 0; j < n; j++)
     {
         scanf(" %c", c + i);
-        back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
+        back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug, 0), -1, 0);
         // printf("%c\n", c[i]);
         for (i = 1; i < 4; i++)
         {
-            back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+            back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position], 0);
         }
 
         for (i = 2; i > -1; i--)
         {
-            back = post_reflector(&RotorsArr[i], back);
+            back = post_reflector(&RotorsArr[i], back, 0);
         }
 
         if (back < 0)
@@ -53,7 +53,7 @@ int main(void)
         {
             back %= 26;
         }
-        printf("OUTPUT: %c\n", plugboard(back + 65, ArrPlug));
+        printf("OUTPUT: %c\n", plugboard(back + 65, ArrPlug, 0));
     }
     return 0;
 }
