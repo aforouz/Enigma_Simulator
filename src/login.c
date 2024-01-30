@@ -53,12 +53,12 @@ void login()
     for(i=0;i<100;i++)
     {
         input=getch();
-        if(temp==13)//Enter key
+        if(input==13)//Enter key
         {
             pass[++i]='\0';
             break;
         }
-        if(temp==27)//Esc key
+        if(input==27)//Esc key
         {
             printf("\n\nProgram Exited! Bye:)");
             exit(0);
