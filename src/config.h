@@ -39,6 +39,9 @@
 #define str_mode 2
 #define file_mode 3
 
+//for file
+FILE *fpt;
+
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                                Global Variable
@@ -123,7 +126,7 @@ void select_mode();
 // MUST BE CALLED TO INITIALIZE ROTORS
 //RETURNS AN ARRAY OF THREE ROTORS
 //EXAMPLE: {2,'B',Arrrotor}
-Rotor *rotorinit();
+void rotorinit(Rotor *rotor_array);
 
 
 
