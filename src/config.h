@@ -39,6 +39,10 @@
 #define str_mode 2
 #define file_mode 3
 
+//for settings
+#define file_set 1
+#define manual_set 2
+
 //for file
 FILE *fpt;
 

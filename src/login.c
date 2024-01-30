@@ -30,7 +30,7 @@ void login()
         printf("\x1B[0m\x1B[31m    **    ****      \x1B[0m\x1B[47m  \x1B[43m                                  |___/                                                                 \x1B[47m  \x1B[0m \x1B[31m    **    ****      \x1B[0m\n");
         printf("\x1B[0m\x1B[31m         ***        \x1B[0m\x1B[47m                                                                                                            \x1B[0m \x1B[31m         ***        \x1B[0m\n\n\n\x1B[0m");
         printf("\x1B[36m                                   *******************************************************************************\n");
-        printf("                                     Ali Forouzandeh Hafshejani   Ali Jafari   Alireza Ahmadi   Mehdi Ebrahimian\n");
+        printf("                                                   Ali Jafari   Alireza Ahmadi   Mehdi Ebrahimian\n");
         printf("                                            Mohammad Hosein Kazemainy   Mohammad Siamaki   Parsa Aminpour\n");
         printf("                                   *******************************************************************************\n\n\n\x1B[0m");
 
@@ -79,6 +79,6 @@ void login()
         signup(user,pass);
         printf("Press Any Key To Sign in");
         getch();
-        goto try_again;      
+        goto try_again;
     }
 }

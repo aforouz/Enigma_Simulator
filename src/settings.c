@@ -1,10 +1,6 @@
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <ctype.h>
-
 #include "config.h"
 
-void read_settings(Rotor *rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n,int *r3p,int *plugs)
+void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n,int *r3p,char *plugs)
 {
     FILE *sets;
 
@@ -15,7 +11,7 @@ void read_settings(Rotor *rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *
         exit(0);
     }
 
-    if(fscanf(sets,"Rotor1:%d,%d Rotor2:%d,%d Rotor3:%d,%d",r1n,r1p,r2n,r2p,r3n,r3p)!=6)
+    if(fscanf(sets,"Enter Each Rotor Number,Position: Rotor1: %d,%d Rotor2: %d,%d Rotor3: %d,%d",r1n,r1p,r2n,r2p,r3n,r3p)!=6)
     {
         printf("settings.txt Not Correct!!!");
         exit(0);
@@ -65,14 +61,41 @@ void read_settings(Rotor *rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *
     }
 
     fclose(sets);
+
+    for(int i=0;i<=25;i++)plugs[i]-='A';
 }
 
-int main()
+int select_settings()
 {
-    int r1n,r1p,r2n,r2p,r3n,r3p;
-    char plugs[26];
-    read_settings(5,&r1n,&r1p,&r2n,&r2p,&r3n,&r3p,plugs);
-    printf("%d %d,%d %d,%d %d\n",r1n,r1p,r2n,r2p,r3n,r3p);
-    for(int i=0;i<26;i++)printf("%c ",plugs[i]);
-    return 0;
+    int input=0,menu=1;
+
+    while(1)
+    {
+        if(input==27)//Esc key
+        {
+            printf("\n\nProgram Exited! Bye:)");
+            exit(0);
+        }
+        if(input==13)break;
+        if(input==80)menu++;
+        if(input==72)menu--;
+        if(menu>2)menu=1;
+        if(menu==0)menu=2;
+
+        system("cls");
+
+        printf("\x1B[33mHow Do You Want Set Settings?\n");     
+        printf("Use Up/Down Key And Press Enter Or Esc\x1B[0m\n\n");
+
+        if(menu==1)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
+        printf("Import From Settings.txt\n");
+
+        if(menu==2)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
+        printf("Enter Manually\n");
+
+        input=getch();
+    }
+
+    return menu;
 }
+

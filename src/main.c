@@ -146,44 +146,29 @@ int main(void)
 
         case (file_mode):
         {
-            
-            size_t n=99999999, back, i;
-            char *c;
-            c = (char *)malloc(n+1 * sizeof(char));
-            output_string = (char *)calloc(n+1 , sizeof(char));
-            printf("Put * at the end of your message \n" );
-            c = input();
-            
-            for (size_t j = 0; j < strlen(c); j++)
+            FILE *input_file;
+
+            input_file=fopen("input.txt","r");
+            if(input_file==NULL)
             {
-                // scanf(" %c", c + i);
-                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
-            
-                for (i = 1; i < 4; i++)
-                {
-                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
-                }
-
-                for (i = 2; i > -1; i--)
-                {
-                    back = post_reflector(&RotorsArr[i], back);
-                }
-
-                if (back < 0)
-                {
-                    back += 26;
-                }
-                else
-                {
-                    back %= 26;
-                }
-
-                output_string[i] = plugboard(back + 65,ArrPlug);
-                // change_mode(c[i],output_string);
+                printf("input.txt Not Found!!!");
+                exit(0);
             }
 
-            output(output_string);//now we have the encrypted file
-            
+            while(1)
+            {
+                char temp=fgetc(input_file);
+                if(feof(input_file))break;
+
+                if((temp>='A' && temp<='Z') || (temp>='a' && temp<='z'))
+                {
+                    temp=toupper(temp);
+
+                    //use temp for enigma in this line
+                }               
+            }
+
+            fclose(input_file);          
             break;
         }
     
