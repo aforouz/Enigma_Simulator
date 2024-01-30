@@ -21,14 +21,14 @@
 #include <errno.h>
 #include <stdint.h>
 #include <conio.h>
-
+#include <ctype.h>
 #include <stdbool.h>
+
 //#include <regex.h>
 
 // with -lcurl lib option while you compiling.
 // i.e. gcc requests.c -lcurl
 //#include <curl/curl.h>
-#include <ctype.h>
 
 
 #define SIZE 101
@@ -113,7 +113,7 @@ void login();
 
 
 //MUST BE CALLED FOR SELECTING MODE
-void select_mode();
+int select_mode();
 
 
 
@@ -141,7 +141,7 @@ int indexof(char c, char arr[]);
 // @param InputChar specifies wethear the rotor needs to shift or not
 // @param check tells the function wethear to print the output or not
 // @returns The ASCII number of the rotors output character minus rotor's position
-int pre_reflector(Rotor *rotor, int Input, char InputChar, int check);
+int pre_reflector(Rotor *rotor, int Input, int InputChar, int check);
 
 // @note After passing the reflector, it is time to go back through the rotors
 // @dev Is there anyway to call the rotors more efficiently?
@@ -154,9 +154,8 @@ int post_reflector(Rotor *rotor, int input, int check);
 // @note First, user's input goes to this function to get checked in the ArrPlug array
 // @param c is the user-input character
 // @param arr[] is the ArrPlug assinged previously
-// @param check tells the function wethear to print the output or not
 // @returns The ASCII number of character which was 'connected' to the input character in plugboard
-char plugboard(char c, char arr[], int check);
+int plugboard(char c, int arr[]);
 
 // This function is used to configure the Rotors and the plugboard, to encode or decode a letter...
 void config();

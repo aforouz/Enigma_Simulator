@@ -1,8 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <ctype.h>
 
-void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n,int *r3p,char *plugs)
+#include "config.h"
+
+void read_settings(Rotor *rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n,int *r3p,int *plugs)
 {
     FILE *sets;
 

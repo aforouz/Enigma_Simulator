@@ -274,4 +274,3 @@ void logging(char *input, char *output, char *stage) {
 // 	logging("R", "H", "R2");
 // 	return 0;
 // }
-	
