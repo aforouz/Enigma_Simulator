@@ -73,6 +73,7 @@ enum Level _project_status_check(char *input, char *output) {
 }
 
 
+
 /*
 /* NOTE: Internal function!
 /* @dev Not useable for outside of this file.
@@ -197,6 +198,70 @@ void _writeLog(char *_formatted_data) {
 }
 
 
+static int _get_line_count() {
+	FILE *fp;
+	int count;
+	char c;
+
+	if ((fp = fopen("../logs/machine_logs.log", "r")) != NULL) {
+		while (!feof(fp) && !ferror(fp) && c != EOF) {
+			c = fgetc(fp);
+			if(c == '\n') count ++;
+		}
+		fclose(fp);
+		return count;
+	}
+
+	fclose(fp);
+	printf("\x1b[31mSome error occured during machine_logs file opening!\n");
+	exit(1);
+}
+
+
+struct LastModifyConfig {
+	unsigned int last_R1;
+	unsigned int last_R2;
+	unsigned int last_R3;
+};
+
+
+#define MAX_LINE 2048
+void generate_config_from_last_usage() {
+	struct LastModifyConfig _config;
+
+	// read file from last to first
+	FILE *fp;
+
+	int read_line = _get_line_count();
+	printf("%d\n", read_line);
+
+	int current_line = 1;
+
+	fp = fopen("../logs/machine_logs.log", "r");
+
+	if(fp != NULL) {
+		char buffer[MAX_LINE];
+
+		while(read_line != 1) {
+			printf("%d - %d\n", current_line, read_line);
+			fgets(buffer, MAX_LINE, fp);
+
+			if(current_line == read_line) {
+		 		printf("%s\n", buffer);
+		 	
+		 		read_line = read_line - 1;
+		 		current_line = 1;
+		 	} else current_line += 1;	
+		}
+		fclose(fp);
+	}
+
+	// add last rotor status data to struct
+
+	// return _config struct
+}
+
+
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -264,14 +329,39 @@ void logging(char *input, char *output, char *stage) {
 }
 
 // NOTE: This is just a sample of the logging.c workflow and should be deleted in the production phase.
-//int main() {
-	// sample input
-	//logging("A", "B", "R1");
-	//ogging("B", "C", "R2");
-// 	change_mode("X", "Z");
-// 	change_mode("X", "Z");
-// 	logging("Z", "R", "R1");
-// 	logging("R", "H", "R2");
+// int main() {
+// 	// sample input
+// 	change_mode("X", "Z"); // turn on
+
+// 	logging("A", "B", "R1");
+// 	logging("B", "C", "R2");
+// 	logging("C", "D", "R3");
+// 	logging("D", "E", "REF");
+// 	logging("E", "F", "R3");
+// 	logging("F", "G", "R2");
+// 	logging("G", "H", "R1");
+
+// 	change_mode("H", "I"); // turn off
+// /////////////////////////////////////////////// SECOND ROUND
+// 	change_mode("X", "Z"); // turn on
+
+// 	logging("A", "B", "R1");
+// 	logging("B", "C", "R2");
+// 	logging("C", "D", "R3");
+// 	logging("D", "E", "REF");
+// 	logging("E", "F", "R3");
+// 	logging("F", "G", "R2");
+// 	logging("G", "H", "R1");
+
+// 	change_mode("H", "I"); // turn off
+
+// 	int n = _get_line_count();
+// 	printf("%d\n", n);
 // 	return 0;
 // }
-	
+
+int main() {
+	// int n = _get_line_count();
+	// printf("%d\n", n);
+	generate_config_from_last_usage();
+}
