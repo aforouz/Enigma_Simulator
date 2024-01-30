@@ -1,24 +1,19 @@
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //                          config.c
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//co-authored.contains variable initialization and function exact
-//declarations 
+// co-authored.contains variable initialization and function exact
+// declarations
 
 #include "config.h"
 
-
-
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ENIGMA.c
 
-
-//variables getting initialized
-//these are marked with extern in the header file, used in enigma.c ...
+// variables getting initialized
+// these are marked with extern in the header file, used in enigma.c ...
 char ArrPlug[26] = {'N', 'B', 'C', 'D', 'F', 'E', 'H', 'G', 'K', 'J', 'I', 'L', 'M', 'A', 'O', 'P', 'Z', 'X', 'S', 'T', 'U', 'V', 'W', 'R', 'Y', 'Q'};
 
-//this is our reflector
+// this is our reflector
 Rotor RotorsArr[4] = {0, 'n', {'A', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'Y', 'T'}};
-
 
 int indexof(char c, char arr[])
 {
@@ -29,7 +24,31 @@ int indexof(char c, char arr[])
     }
 }
 
-int pre_reflector(Rotor *rotor, int input, char InputChar, int check)
+char *inputString(FILE *fp, size_t size)
+{
+    // The size is extended by the input with the value of the provisional
+    char *str;
+    int ch;
+    size_t len = 0;
+    str = realloc(NULL, sizeof(*str) * size); // size is start size
+    if (!str)
+        return str;
+    while (EOF != (ch = fgetc(fp)) && ch != '\n')
+    {
+        str[len++] = ch;
+        if (len == size)
+        {
+            str = realloc(str, sizeof(*str) * (size += 16));
+            if (!str)
+                return str;
+        }
+    }
+    str[len++] = '\0';
+
+    return realloc(str, sizeof(*str) * len);
+}
+
+int pre_reflector(Rotor *rotor, int input, int InputChar, int check)
 {
     if ((*rotor).ShiftChar == InputChar)
     {
@@ -62,12 +81,12 @@ int post_reflector(Rotor *rotor, int input, int check)
     return indexof(input + 65, (*rotor).ArrRotor) - (*rotor).Position;
 }
 
-char plugboard(char c, char arr[], int check)
+int plugboard(char c, int arr[])
 {
     return arr[c - 65];
 }
 
-void rotorinit(Rotor *rotor_array)
+void rotorinit(Rotor *rotor_array, int input_mode)
 {
     int n = 5;
     Rotor *default_rotors;
@@ -151,6 +170,11 @@ void rotorinit(Rotor *rotor_array)
         }
     }
 
+    if (input_mode == file_mode)
+    {
+        // code required to set the rotors 
+    }
+
     int first_rotor = 0, second_rotor = 0, third_rotor = 0;
     int first_rotor_position = 0, second_rotor_position = 0, third_rotor_position = 0;
     int second_rotor_shift = 0, third_rotor_shift = 0;
@@ -171,8 +195,8 @@ void rotorinit(Rotor *rotor_array)
     }
 
     printf("Now it's time to choose which rotor to use for the third rotor:\n");
-    while (!(1 <= second_rotor && 
-           second_rotor <= n) &&
+    while (!(1 <= second_rotor &&
+             second_rotor <= n) &&
            third_rotor != first_rotor &&
            third_rotor != second_rotor)
     {
@@ -182,7 +206,7 @@ void rotorinit(Rotor *rotor_array)
 
     printf("Do me a favor and enter the first rotor's position number: (it should be between 1 and 27):\n");
     while (!(1 <= first_rotor_position &&
-           first_rotor_position <= 26))
+             first_rotor_position <= 26))
     {
         printf("It feels good to enter a valid number, TRUST ME! (1 <= the number you enter <= 26)\n");
         scanf("%d", &first_rotor_position);
@@ -190,7 +214,7 @@ void rotorinit(Rotor *rotor_array)
 
     printf("How about you enter the second rotor's position number?\n");
     while (!(1 <= second_rotor_position &&
-           second_rotor_position <= 26))
+             second_rotor_position <= 26))
     {
         printf("Here to let you know to enter a valid number... (1 <= the number you enter <= 26)\n");
         scanf("%d", &second_rotor_position);
@@ -198,46 +222,46 @@ void rotorinit(Rotor *rotor_array)
 
     printf("Now enter the last (third) rotor's position number:\n");
     while (!(1 <= third_rotor_position &&
-           third_rotor_position <= 26))
+             third_rotor_position <= 26))
     {
         printf("THE NUMBER SHOULD BE BETWEEN 1 AND 27, REMEMBER!\n");
         scanf("%d", &third_rotor_position);
     }
 
     printf("You doin GREAT!\nNow enter the shift number for the second rotor: (1 <= input number <= 26)\n");
-    while (!(1 <= second_rotor_shift && 
-           second_rotor_shift <= 26))
+    while (!(1 <= second_rotor_shift &&
+             second_rotor_shift <= 26))
     {
         printf("People who enter a valid number live longer, that's a FACT! (1 <= input number <= 26)\n");
         scanf("%d", &second_rotor_shift);
     }
 
     printf("One more step to initialize the rotors!\nEnter the shift number for the third rotor:\n");
-    while (!(1 <= third_rotor_shift && 
-           third_rotor_shift <= 26))
+    while (!(1 <= third_rotor_shift &&
+             third_rotor_shift <= 26))
     {
         printf("Validating your input is a pain in the butt! So please enter a valid character. (1 <= input number <= 26)\n");
         scanf("%d", &third_rotor_shift);
     }
 
-    first_rotor  -= 1;
+    first_rotor -= 1;
     second_rotor -= 1;
-    third_rotor  -= 1;
+    third_rotor -= 1;
 
-    first_rotor_position  -= 1;
+    first_rotor_position -= 1;
     second_rotor_position -= 1;
-    third_rotor_position  -= 1;
+    third_rotor_position -= 1;
 
     second_rotor_shift -= 1;
-    third_rotor_shift  -= 1;
+    third_rotor_shift -= 1;
 
-    default_rotors[first_rotor].Position  = first_rotor_position;
+    default_rotors[first_rotor].Position = first_rotor_position;
     default_rotors[first_rotor].ShiftChar = 'a';
 
-    default_rotors[second_rotor].Position  = second_rotor_position;
+    default_rotors[second_rotor].Position = second_rotor_position;
     default_rotors[second_rotor].ShiftChar = second_rotor_shift;
 
-    default_rotors[third_rotor].Position  = third_rotor_position;
+    default_rotors[third_rotor].Position = third_rotor_position;
     default_rotors[third_rotor].ShiftChar = third_rotor_shift;
 
     Rotor reflector = {0, 27, {'A', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'Y', 'T'}};
@@ -250,7 +274,7 @@ void rotorinit(Rotor *rotor_array)
     return;
 }
 
-int* plugboard_init(int plug_arr[26])
+int *plugboard_init(int plug_arr[26])
 {
     char a, b;
     int check = 1;
@@ -269,14 +293,14 @@ int* plugboard_init(int plug_arr[26])
 
         if (check == 0)
             break;
-        
+
         printf("OK, now enter the characters as said (XY):\n");
         scanf(" %c%c", &a, &b);
 
         a = toupper(a);
         b = toupper(b);
 
-        while (!(65 <= a && a <= 90) || 
+        while (!(65 <= a && a <= 90) ||
                !(65 <= b && b <= 90))
         {
             printf("Do me a favor and enter them correctly! (letters form A-Z)");
@@ -295,49 +319,159 @@ int* plugboard_init(int plug_arr[26])
     return plug_arr;
 }
 
-
 //************************************
 //     morse code initializations
 //************************************
 
-//declaration is in the header file "config.h" but the initialization is here
+// declaration is in the header file "config.h" but the initialization is here
 
 const char *CHAR_TO_MORSE[128] = {
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, "-.-.--", ".-..-.", NULL, NULL, NULL, NULL, ".----.",
-            "-.--.", "-.--.-", NULL, NULL, "--..--", "-....-", ".-.-.-", "-..-.",
-            "-----", ".----", "..---", "...--", "....-", ".....", "-....", "--...",
-            "---..", "----.", "---...", NULL, NULL, "-...-", NULL, "..--..",
-            ".--.-.", ".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
-            "....", "..", ".---", "-.-", ".-..", "--", "-.", "---",
-            ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--",
-            "-..-", "-.--", "--..", NULL, NULL, NULL, NULL, "..--.-",
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-    };
-
-const char* MORSE_TO_CHAR[128] = {
-        NULL, NULL, "E", "T", "I", "N", "A", "M",
-        "S", "D", "R", "G", "U", "K", "W", "O",
-        "H", "B", "L", "Z", "F", "C", "P", NULL,
-        "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
-        "5", "6", NULL, "7", NULL, NULL, NULL, "8",
-        NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
-        "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
-        "3", NULL, NULL, NULL, "2", NULL, "1", "0",
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
-        NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
-        NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
-        NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
-        NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
-        NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "-.-.--",
+    ".-..-.",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    ".----.",
+    "-.--.",
+    "-.--.-",
+    NULL,
+    NULL,
+    "--..--",
+    "-....-",
+    ".-.-.-",
+    "-..-.",
+    "-----",
+    ".----",
+    "..---",
+    "...--",
+    "....-",
+    ".....",
+    "-....",
+    "--...",
+    "---..",
+    "----.",
+    "---...",
+    NULL,
+    NULL,
+    "-...-",
+    NULL,
+    "..--..",
+    ".--.-.",
+    ".-",
+    "-...",
+    "-.-.",
+    "-..",
+    ".",
+    "..-.",
+    "--.",
+    "....",
+    "..",
+    ".---",
+    "-.-",
+    ".-..",
+    "--",
+    "-.",
+    "---",
+    ".--.",
+    "--.-",
+    ".-.",
+    "...",
+    "-",
+    "..-",
+    "...-",
+    ".--",
+    "-..-",
+    "-.--",
+    "--..",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    "..--.-",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
 };
 
-//End of file
+const char *MORSE_TO_CHAR[128] = {
+    NULL, NULL, "E", "T", "I", "N", "A", "M",
+    "S", "D", "R", "G", "U", "K", "W", "O",
+    "H", "B", "L", "Z", "F", "C", "P", NULL,
+    "V", "X", NULL, "Q", NULL, "Y", "J", NULL,
+    "5", "6", NULL, "7", NULL, NULL, NULL, "8",
+    NULL, "/", NULL, NULL, NULL, "(", NULL, "9",
+    "4", "=", NULL, NULL, NULL, NULL, NULL, NULL,
+    "3", NULL, NULL, NULL, "2", NULL, "1", "0",
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, ":",
+    NULL, NULL, NULL, NULL, "?", NULL, NULL, NULL,
+    NULL, NULL, "\"", NULL, NULL, NULL, "@", NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, "'", NULL,
+    NULL, "-", NULL, NULL, NULL, NULL, NULL, NULL,
+    NULL, NULL, ".", NULL, "_", ")", NULL, NULL,
+    NULL, NULL, NULL, ",", NULL, "!", NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+};
+// End of file

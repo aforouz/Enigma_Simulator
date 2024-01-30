@@ -360,8 +360,3 @@ void logging(char *input, char *output, char *stage) {
 // 	return 0;
 // }
 
-int main() {
-	// int n = _get_line_count();
-	// printf("%d\n", n);
-	generate_config_from_last_usage();
-}

@@ -1,0 +1,13 @@
+Enter Each Rotor Number,Position:
+
+Rotor1: 3,15
+Rotor2: 5,10
+Rotor3: 1,6
+
+Enter Plugboard Connections:
+
+*
+(A:C)
+(V:B)
+(N:M)
+*

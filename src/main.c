@@ -22,79 +22,94 @@ int main(void)
     {
 
 
-        case (char_mode)
+        case (char_mode):
         {
-
-            size_t n=99999999;, back, i;
-            char *c;
-            c = (char *)malloc(n * sizeof(char));
+            // size_t n=99999999; 
+            int back, i;
+            char c;
+            // char *c;
+            // c = (char *)malloc(n * sizeof(char));
 
             printf("\nEnter a single character every time, and press Enter :\n");
-            for (size_t j = 0; j < n; j++)
+            printf("(If finished enter '*')\n");
+            c = getch();
+
+            while (c != '*')
             {
-                printf("Enter a character :");
-                scanf(" %c", &(c + i));
-                
-                //plugin1 logging
-                logging(c[i],plugboard(c[i],ArrPlug),plugin1);
-                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
-            
-               //first rotor logging
-                logging(plugboard(c[i],ArrPlug),back+65,"R1");
-
-                for (i = 1; i < 4; i++)
+                c = toupper(c);
+                if (!(65 <= c && c <= 90))
                 {
-                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
-                   //first rotor logging
-                logging(plugboard(c[i],ArrPlug),back+65,"R1");
+                    printf("Oh shit, wrong character, enter a valid one: (A-Z)\n");
+                    c = getch();
+                    continue;
                 }
 
-                for (i = 2; i > -1; i--)
-                {
-                    back = post_reflector(&RotorsArr[i], back);
-                }
 
-                if (back < 0)
-                {
-                    back += 26;
-                }
-                else
-                {
-                    back %= 26;
-                }
-                printf("%c\n", plugboard(back + 65, ArrPlug));
-                // change_mode(c[i],plugboard(back+65 , ArrPlug));
             }
+            // for (size_t j = 0; j < strlen(c); j++)
+            // {
+            //     printf("Enter a character :");
+            //     scanf(" %c", c + i);
+                
+            //     //plugin1 logging
+            //     logging(c[i],plugboard(c[i],ArrPlug),plugin1);
+            //     back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
+            
+            //    //first rotor logging
+            //     logging(plugboard(c[i],ArrPlug),back+65,"R1");
+
+            //     for (i = 1; i < 4; i++)
+            //     {
+            //         back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+            //        //first rotor logging
+            //     logging(plugboard(c[i],ArrPlug),back+65,"R1");
+            //     }
+
+            //     for (i = 2; i > -1; i--)
+            //     {
+            //         back = post_reflector(&RotorsArr[i], back);
+            //     }
+
+            //     if (back < 0)
+            //     {
+            //         back += 26;
+            //     }
+            //     else
+            //     {
+            //         back %= 26;
+            //     }
+            //     printf("%c\n", plugboard(back + 65, ArrPlug));
+            //     // change_mode(c[i],plugboard(back+65 , ArrPlug));
+            // }
 
         break;
         }
 
 
 
-        case (str_mode)
+        case (str_mode):
 
         {
 
 
-            size_t n=99999999, back, i;
-            char *c;
-            c = (char *)malloc(n+1 * sizeof(char));
-            output_string = (char *)calloc(n+1 , sizeof(char));
-
             printf("\nEnter your string in one line , without spaces :");
-            gets(c);
-            for (size_t j = 0; j < strlen(c); j++)
+            
+            int back;
+            char *user_input;
+            user_input = inputString(stdin, 1);
+
+            for (size_t j = 0; j < strlen(user_input); j++)
             {
                 // scanf(" %c", c + i);
                 
                 //plugin1 logging
-                logging(c[i],plugboard(c[i],ArrPlug),plugin1);
+                logging(user_input[j],plugboard(user_input[j],ArrPlug),"plugin1");
 
 
-                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
+                back = pre_reflector(&RotorsArr[0], plugboard(user_input[j], ArrPlug) - 65, 'a');
 
                 //first rotor logging
-                logging(plugboard(c[i],ArrPlug),back+65,"R1");
+                logging(plugboard(user_input[j],ArrPlug),back+65,"R1");
 
 
                 for (i = 1; i < 4; i++)
@@ -129,46 +144,31 @@ int main(void)
         }
 
 
-        case (file_mode)
+        case (file_mode):
         {
-            
-            size_t n=99999999, back, i;
-            char *c;
-            c = (char *)malloc(n+1 * sizeof(char));
-            output_string = (char *)calloc(n+1 , sizeof(char));
-            printf("Put * at the end of your message \n" );
-            c = input();
-            
-            for (size_t j = 0; j < strlen(c); j++)
+            FILE *input_file;
+
+            input_file=fopen("input.txt","r");
+            if(input_file==NULL)
             {
-                // scanf(" %c", c + i);
-                back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
-            
-                for (i = 1; i < 4; i++)
-                {
-                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
-                }
-
-                for (i = 2; i > -1; i--)
-                {
-                    back = post_reflector(&RotorsArr[i], back);
-                }
-
-                if (back < 0)
-                {
-                    back += 26;
-                }
-                else
-                {
-                    back %= 26;
-                }
-
-                output_string[i] = plugboard(back + 65,ArrPlug);
-                // change_mode(c[i],output_string);
+                printf("input.txt Not Found!!!");
+                exit(0);
             }
 
-            output(output_string);//now we have the encrypted file
-            
+            while(1)
+            {
+                char temp=fgetc(input_file);
+                if(feof(input_file))break;
+
+                if((temp>='A' && temp<='Z') || (temp>='a' && temp<='z'))
+                {
+                    temp=toupper(temp);
+
+                    //use temp for enigma in this line
+                }               
+            }
+
+            fclose(input_file);          
             break;
         }
     
@@ -176,4 +176,4 @@ int main(void)
 
     return 0;
 }
-}//END OF FILE
+//END OF FILE
