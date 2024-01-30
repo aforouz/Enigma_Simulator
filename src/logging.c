@@ -209,7 +209,7 @@ void _writeLog(char *_formatted_data) {
 /* @dev use this function during your app to have a logging journy.
 /* @param last_input takes Enigma machine input
 /* @param last_output takes Enigma machine output
-/* @returns Nothing and will change the 1machine_mode` global variable.
+/* @returns Nothing and will change the machine_mode` global variable.
 /* @notice This function should only use once before machine start and once after machine close.
 	this function is precisely based on the Pauseable system design pattern.
 */
@@ -264,14 +264,14 @@ void logging(char *input, char *output, char *stage) {
 }
 
 // NOTE: This is just a sample of the logging.c workflow and should be deleted in the production phase.
-int main() {
+//int main() {
 	// sample input
-	logging("A", "B", "R1");
-	logging("B", "C", "R2");
-	change_mode("X", "Z");
-	change_mode("X", "Z");
-	logging("Z", "R", "R1");
-	logging("R", "H", "R2");
-	return 0;
-}
+	//logging("A", "B", "R1");
+	//ogging("B", "C", "R2");
+// 	change_mode("X", "Z");
+// 	change_mode("X", "Z");
+// 	logging("Z", "R", "R1");
+// 	logging("R", "H", "R2");
+// 	return 0;
+// }
 	

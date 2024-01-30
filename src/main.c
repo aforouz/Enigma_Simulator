@@ -16,6 +16,7 @@ int main(void)
 
     //Select input/output mode
     int selected_mode=select_mode();
+    int former_output;
 
     switch (selected_mode)
     {
@@ -32,12 +33,20 @@ int main(void)
             for (size_t j = 0; j < n; j++)
             {
                 printf("Enter a character :");
-                scanf(" %c", c + i);
+                scanf(" %c", &(c + i));
+                
+                //plugin1 logging
+                logging(c[i],plugboard(c[i],ArrPlug),plugin1);
                 back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
             
+               //first rotor logging
+                logging(plugboard(c[i],ArrPlug),back+65,"R1");
+
                 for (i = 1; i < 4; i++)
                 {
                     back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+                   //first rotor logging
+                logging(plugboard(c[i],ArrPlug),back+65,"R1");
                 }
 
                 for (i = 2; i > -1; i--)
@@ -54,6 +63,7 @@ int main(void)
                     back %= 26;
                 }
                 printf("%c\n", plugboard(back + 65, ArrPlug));
+                // change_mode(c[i],plugboard(back+65 , ArrPlug));
             }
 
         break;
@@ -76,16 +86,29 @@ int main(void)
             for (size_t j = 0; j < strlen(c); j++)
             {
                 // scanf(" %c", c + i);
+                
+                //plugin1 logging
+                logging(c[i],plugboard(c[i],ArrPlug),plugin1);
+
+
                 back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug) - 65, 'a');
-            
+
+                //first rotor logging
+                logging(plugboard(c[i],ArrPlug),back+65,"R1");
+
+
                 for (i = 1; i < 4; i++)
                 {
+                    former_output = back;
                     back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position]);
+                    logging(former_output+65 , back +65 , ("R%d",i+1));// goes from rotor2 to rotor4(reflect)
                 }
 
                 for (i = 2; i > -1; i--)
                 {
+                    former_output = back;
                     back = post_reflector(&RotorsArr[i], back);
+                    logging(former_output+65 , back+65 , "R%d",i+2);
                 }
 
                 if (back < 0)
@@ -98,7 +121,7 @@ int main(void)
                 }
 
                 output_string[i] = plugboard(back + 65,ArrPlug);
-                
+                // change_mode(c[i],output_string[i]);
             }
                 puts(output_string);
 
@@ -140,9 +163,12 @@ int main(void)
                     back %= 26;
                 }
 
-                output_string[i] = plugboard(back + 65,ArrPlug)
+                output_string[i] = plugboard(back + 65,ArrPlug);
+                // change_mode(c[i],output_string);
             }
-            output(output_string);
+
+            output(output_string);//now we have the encrypted file
+            
             break;
         }
     
