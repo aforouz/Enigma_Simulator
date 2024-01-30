@@ -37,10 +37,23 @@ Each source file contains comments to explain the workflow.
 Usage includes different types of both Encryption and Decryption.
 for this project the 3-Rotored model was taken as the refrence.
 please read the "usage.txt" before installation and use. 
+The program can be used in three modes : 
+
+- 1)Single character wich shows the exact workflow in each session.
+
+- 2)An array of characters as input and then another array as output.
+
+- 3)A ".txt" file as input and another one for output
+
 
 
 ## Usage/Examples
-Please read "usage.txt" before installation and use
+Please read "usage.txt" before installation and use.
+This machine has three different types of input/output.
+And two different types of configuration.
+The machine will recover the latest config.
+In the first start you will be asked to setup the machine completely
+
 ```c
 int main(void)
 {
@@ -51,11 +64,20 @@ int main(void)
 
 ## Features
 
-- Live previews
-- Functional Usage (i.e. txt to txt)
-- Cross platform
-- Interactive Command Line Interface(CLI)
-
+- Live previews .
+- Cross platform . 
+- Real time/exact workflow table. 
+- Machine will recover the latest config.
+- Morse code .
+- Config files .
+- Functional Usage (i.e. txt to txt) .
+- Interactive Command Line Interface(CLI) .
+- Detailed log files . 
+- Three different methods of using the machine.
+- Capable of modifying the configuration in two different ways.(CLI & .TXT) .
+- Encrypted Username and password.
+- Well adjusted requests.
+- Username and password Verification .
 
 ## Screenshots
 
@@ -69,8 +91,7 @@ We are freshman students at ["Isfahan University of Technology"](https://english
 
 
 
-This is a school project and our group members are :
-- [A.Frouzandeh(manager)](https://github.com/aforouz/)
+This is a school project and our group members are :S
 - [M.Kazemainy](https://github.com/M-H-K-ir)
 - [P.Aminpoor](https://github.com/ParsaAminpour)
 - [M.Ebrahimian](https://github.com/m0ebraahim)
@@ -90,7 +111,8 @@ If you have any feedback, please reach out to us at AlirezaAhmadi1729@gmail.com
 
 ## Related
 
-Here are some related projects
+Here are some related projects :
+
 
 [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem))
 
