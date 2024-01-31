@@ -72,12 +72,12 @@ extern bool machine_mode;
 struct Rotor
 {
     int Position;
-    char ShiftChar;
+    int ShiftChar;
     char ArrRotor[26];//Every rotor has a set of 26 possible outputs i.e. "A-->z"
 };
 typedef struct Rotor Rotor;//unpro naming but anyway we call our instances "Rotor" 
 
-extern Rotor RotorsArr[4];
+// extern Rotor RotorsArr[4];
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                       PLUG_IN_PORTS
@@ -95,7 +95,7 @@ extern Rotor RotorsArr[4];
 
 
 // moved to  "config.c"
-extern char ArrPlug[26];
+// extern char ArrPlug[26];
 
 
 
@@ -126,13 +126,22 @@ int select_mode();
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //           i.e. : func declerations used in enigma.c
 
+// 
+int select_settings();
+
+// 
+void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n,int *r3p,char *plugs);
 
 // MUST BE CALLED TO INITIALIZE ROTORS
 //RETURNS AN ARRAY OF THREE ROTORS
 //EXAMPLE: {2,'B',Arrrotor}
-void rotorinit(Rotor *rotor_array);
+void rotorinit(Rotor rotor_array[3], Rotor *default_rotors, int n);
 
+// 
+void plugboard_init(char plug_arr[26]);
 
+// 
+void add_remove_rotor(Rotor *default_rotors, int *n);
 
 // @param c is a character
 // @param arr[] is an array of characters
@@ -151,23 +160,25 @@ int pre_reflector(Rotor *rotor, int Input, int InputChar, int check);
 // @dev Is there anyway to call the rotors more efficiently?
 // @param rotor is the rotor instructed to be used in the machine
 // @param Input is the output of the previous rotor or reflector
-// @param check tells the function wethear to print the output or not
 // @returns The ASCII number of the rotors output character, minus rotor's position
-int post_reflector(Rotor *rotor, int input, int check);
+int post_reflector(Rotor *rotor, int input);
 
 // @note First, user's input goes to this function to get checked in the ArrPlug array
 // @param c is the user-input character
 // @param arr[] is the ArrPlug assinged previously
 // @returns The ASCII number of character which was 'connected' to the input character in plugboard
-int plugboard(char c, int arr[]);
+char plugboard(char c, char arr[]);
 
 // This function is used to configure the Rotors and the plugboard, to encode or decode a letter...
-void config();
+void config(Rotor RotorsArr[4], char plugboard[26]);
 
 // @notice: Use this function during the Enigma algorithm workflow when you reach to the 
 //   last section of encryption. (for log/config handling).
 //     It will change the global `is_last_operation` variable in did.
 void change_mode();
+
+// 
+void enigma(int selected_mode, Rotor RotorsArr[4], char ArrPlug[26]);
 
 
 
@@ -239,6 +250,10 @@ int morse_to_index(const char*);
 //                          LOGGING_CODE_HEADER
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
                        //DECLARATIONS MADE BY P.AMINPOUR
+
+// 
+void logging(char *input, char *output, char *stage);
+
 enum Level {
     INFO, // 0
     WARNING, // 1                               

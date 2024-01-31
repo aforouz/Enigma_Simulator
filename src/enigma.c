@@ -21,39 +21,195 @@
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 //                      DRIVER_CODE
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-int main(void)
+void enigma(int selected_mode, Rotor RotorsArr[4], char ArrPlug[26])
 {
-    int n, back, i;
-    char *c;
-    scanf("%d", &n);
-    c = (char *)malloc(n * sizeof(char));
+    char *output_string;
+    int back;
+    int former_output;
+    size_t counter = 0;
 
-
-
-    for (int j = 0; j < n; j++)
+    switch (selected_mode)
     {
-        scanf(" %c", c + i);
-        back = pre_reflector(&RotorsArr[0], plugboard(c[i], ArrPlug, 0), -1, 0);
-        // printf("%c\n", c[i]);
-        for (i = 1; i < 4; i++)
+
+    case (char_mode):
+    {
+        int back, i;
+        char c;
+
+        printf("\nEnter a single character every time, and press Enter :\n");
+        printf("(If finished enter '*')\n");
+        c = getch();
+
+        while (c != '*')
         {
-            back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i - 1].Position], 0);
+            c = toupper(c);
+            if (!(65 <= c && c <= 90))
+            {
+                printf("Oh shit, wrong character, enter a valid one: (A-Z)\n");
+                c = getch();
+                continue;
+            }
+
+            logging(c, plugboard(c, ArrPlug), "plugin1");
+
+            back = pre_reflector(&RotorsArr[0], plugboard(c, ArrPlug) - 65, 'a', selected_mode);
+
+            // first rotor logging
+            logging(plugboard(c, ArrPlug), back + 65, "R1");
+
+            for (size_t i = 1; i < 4; i++)
+            {
+                former_output = back;
+                back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].Position, selected_mode);
+                logging(former_output + 65, back + 65, ("R%d", i + 1)); // goes from rotor2 to rotor4(reflect)
+            }
+
+            for (size_t i = 2; i > -1; i--)
+            {
+                former_output = back;
+                back = post_reflector(&RotorsArr[i], back);
+                logging(former_output + 65, back + 65, ("R%d", i + 2));
+            }
+
+            if (back < 0)
+            {
+                back += 26;
+            }
+            else
+            {
+                back %= 26;
+            }
+
+            putch(plugboard(back, ArrPlug) + 65);
         }
 
-        for (i = 2; i > -1; i--)
-        {
-            back = post_reflector(&RotorsArr[i], back, 0);
-        }
-
-        if (back < 0)
-        {
-            back += 26;
-        }
-        else
-        {
-            back %= 26;
-        }
-        printf("OUTPUT: %c\n", plugboard(back + 65, ArrPlug, 0));
+        break;
     }
-    return 0;
+
+    case (str_mode):
+    {
+        printf("\nEnter your string in one line , without spaces :");
+
+        char *user_input;
+
+        user_input = inputString(stdin, 1);
+        output_string = (char *) calloc(strlen(user_input), sizeof(char));
+
+        for (size_t j = 0; j < strlen(user_input); j++)
+        {
+            // scanf(" %c", c + i);
+
+            // plugin1 logging
+            logging(user_input[j], plugboard(user_input[j], ArrPlug), "plugin1");
+
+            back = pre_reflector(&RotorsArr[0], plugboard(user_input[j], ArrPlug) - 65, 'a', selected_mode);
+
+            // first rotor logging
+            logging(plugboard(user_input[j], ArrPlug), back + 65, "R1");
+
+            for (size_t i = 1; i < 4; i++)
+            {
+                former_output = back;
+                back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].Position, selected_mode);
+                logging(former_output + 65, back + 65, ("R%d", i + 1)); // goes from rotor2 to rotor4(reflect)
+            }
+
+            for (size_t i = 2; i > -1; i--)
+            {
+                former_output = back;
+                back = post_reflector(&RotorsArr[i], back);
+                logging(former_output + 65, back + 65, ("R%d", i + 2));
+            }
+
+            if (back < 0)
+            {
+                back += 26;
+            }
+            else
+            {
+                back %= 26;
+            }
+
+            output_string[counter++] = plugboard(back, ArrPlug) + 65;
+            // change_mode(c[i],output_string[i]);
+        }
+
+        puts(output_string);
+
+        break;
+    }
+
+    case (file_mode):
+    {
+        FILE *input_file;
+        size_t file_counter = 0;
+        output_string = (char *) malloc(10*sizeof(char));
+
+        input_file = fopen("input.txt", "r");
+        if (input_file == NULL)
+        {
+            printf("input.txt Not Found!!!");
+            exit(0);
+        }
+
+        while (1)
+        {
+            char temp = fgetc(input_file);
+            if (feof(input_file))
+                break;
+
+            if ((temp >= 'A' && temp <= 'Z') || (temp >= 'a' && temp <= 'z'))
+            {
+                if (counter == ++file_counter)
+                {
+                    output_string = realloc(output_string, counter+=10);
+                }
+
+                temp = toupper(temp);
+
+                // use temp for enigma in this line
+                logging(temp, plugboard(temp, ArrPlug), "plugin1");
+
+                back = pre_reflector(&RotorsArr[0], plugboard(temp, ArrPlug) - 65, 0, selected_mode);
+
+                // first rotor logging
+                logging(plugboard(temp, ArrPlug), back + 65, "R1");
+
+                for (size_t i = 1; i < 4; i++)
+                {
+                    former_output = back;
+                    back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].Position, selected_mode);
+                    logging(former_output + 65, back + 65, ("R%d", i + 1)); // goes from rotor2 to rotor4(reflect)
+                }
+
+                for (size_t i = 2; i > -1; i--)
+                {
+                    former_output = back;
+                    back = post_reflector(&RotorsArr[i], back);
+                    logging(former_output + 65, back + 65, ("R%d", i + 2));
+                }
+
+                if (back < 0)
+                {
+                    back += 26;
+                }
+                else
+                {
+                    back %= 26;
+                }
+
+                output_string[counter++] = plugboard(back, ArrPlug) + 65;
+
+            }
+        }
+
+        fclose(input_file);
+        puts(output_string);
+
+        break;
+    }
+
+    default:
+        break;
+    }
 }
