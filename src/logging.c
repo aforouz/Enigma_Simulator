@@ -351,12 +351,12 @@ static struct LastModifyConfig get_log_config() {
 				line ++;
 			}
 		}
-		fclose(fp);
 	}
+	fclose(fp);
 	return _config;
 }
 
-
+// NOTE: this main should be deleted.
 int main() {
 	struct LastModifyConfig conf;
 	conf = get_log_config();
