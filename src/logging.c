@@ -5,10 +5,19 @@
 // declarations included in config.h(main header)
 
 #define DEBUG_OUTPUT 0
+#define MAX_LEN 1000
+#define MAX_LINES 100
 
 // default value when you start using the machine
 bool machine_mode = true;
 
+
+// should define globaly
+char r1[26] = {'C', 'X', 'F', 'G', 'E', 'V', 'A', 'H', 'N', 'M', 'B', 'D', 'L', 'K', 'P', 'O', 'Z', 'T', 'Q', 'J', 'I', 'W', 'S', 'R', 'U', 'Y'};
+char r2[26] = {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'};
+char r3[26] = {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'};
+char r4[26] = {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'};
+char r5[26] = {'V', 'Z', 'B', 'R', 'G', 'I', 'T', 'Y', 'U', 'P', 'S', 'D', 'N', 'H', 'L', 'X', 'A', 'W', 'M', 'J', 'Q', 'O', 'F', 'E', 'C', 'K'};
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -60,7 +69,7 @@ enum Level _project_status_check(char *input, char *output) {
 				}
 			}
 
-			if ((entry->d_type == DT_DIR) 
+			if ((entry->d_type == DT_DIR)
 					&& (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)) 
 			{
 				log_status_number = 1;
@@ -218,49 +227,15 @@ static int _get_line_count() {
 }
 
 
-struct LastModifyConfig {
-	unsigned int last_R1;
-	unsigned int last_R2;
-	unsigned int last_R3;
-};
 
-
-#define MAX_LINE 2048
-void generate_config_from_last_usage() {
-	struct LastModifyConfig _config;
-
-	// read file from last to first
-	FILE *fp;
-
-	int read_line = _get_line_count();
-	printf("%d\n", read_line);
-
-	int current_line = 1;
-
-	fp = fopen("../logs/machine_logs.log", "r");
-
-	if(fp != NULL) {
-		char buffer[MAX_LINE];
-
-		while(read_line != 1) {
-			printf("%d - %d\n", current_line, read_line);
-			fgets(buffer, MAX_LINE, fp);
-
-			if(current_line == read_line) {
-		 		printf("%s\n", buffer);
-		 	
-		 		read_line = read_line - 1;
-		 		current_line = 1;
-		 	} else current_line += 1;	
-		}
-		fclose(fp);
-	}
-
-	// add last rotor status data to struct
-
-	// return _config struct
+unsigned int _indexOF(char c, char arr[])
+{
+    for (unsigned int i = 0; i < 26; i++)
+    {
+        if (arr[i] == c)
+            return i;
+    }
 }
-
 
 
 
@@ -328,6 +303,68 @@ void logging(char *input, char *output, char *stage) {
 	}
 }
 
+
+
+// related to the get_log_config function
+struct LastModifyConfig {
+	unsigned int last_R1;
+	unsigned int last_R2;
+	unsigned int last_R3;
+};
+
+
+#define LAST_R1 ((_get_line_count()))
+#define LAST_R2 ((_get_line_count())-1)
+#define LAST_R3 ((_get_line_count())-2)
+#define LAST_CHAR_IDX 52
+/*
+/* NOTE: Useable and vital function!
+/* @dev This function could be used before running the Enigma Machine to set the prepotional Rotors position.
+/* @returns a LastModifyConfig struct which is the config that you have to set before running the Enigma Machine.
+*/
+static struct LastModifyConfig get_log_config() {
+	struct LastModifyConfig _config;
+
+	FILE *fp;
+
+	int read_line = _get_line_count();
+
+	printf("%d %d %d\n", LAST_R1, LAST_R2, LAST_R3);
+
+	if((fp = fopen("../logs/machine_logs.log", "r")) != NULL) {
+		int line = 1;
+		
+		char data_in_file[MAX_LINES][MAX_LEN];
+
+		while(!feof(fp) && !ferror(fp)) {
+
+			if(fgets(data_in_file[line], MAX_LEN, fp) != NULL) {
+				if (line == LAST_R1) _config.last_R1 = _indexOF(
+					data_in_file[line][LAST_CHAR_IDX], r1);
+
+				else if(line == LAST_R2) _config.last_R2 = _indexOF(
+					data_in_file[line][LAST_CHAR_IDX], r2);
+
+				else if (line == LAST_R3) _config.last_R3 = _indexOF(
+					data_in_file[line][LAST_CHAR_IDX], r3);
+
+				line ++;
+			}
+		}
+		fclose(fp);
+		
+		return _config;
+	}
+}
+
+
+
+
+
+
+
+
+
 // NOTE: This is just a sample of the logging.c workflow and should be deleted in the production phase.
 // int main() {
 // 	// sample input
@@ -359,4 +396,3 @@ void logging(char *input, char *output, char *stage) {
 // 	printf("%d\n", n);
 // 	return 0;
 // }
-
