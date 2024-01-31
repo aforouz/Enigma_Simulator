@@ -62,40 +62,5 @@ void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n
 
     fclose(sets);
 
-    for(int i=0;i<=25;i++)plugs[i]-='A';
+    // for(int i=0;i<=25;i++)plugs[i]-='A';
 }
-
-int select_settings()
-{
-    int input=0,menu=1;
-
-    while(1)
-    {
-        if(input==27)//Esc key
-        {
-            printf("\n\nProgram Exited! Bye:)");
-            exit(0);
-        }
-        if(input==13)break;
-        if(input==80)menu++;
-        if(input==72)menu--;
-        if(menu>2)menu=1;
-        if(menu==0)menu=2;
-
-        system("cls");
-
-        printf("\x1B[33mHow Do You Want Set Settings?\n");     
-        printf("Use Up/Down Key And Press Enter Or Esc\x1B[0m\n\n");
-
-        if(menu==1)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
-        printf("Import From Settings.txt\n");
-
-        if(menu==2)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
-        printf("Enter Manually\n");
-
-        input=getch();
-    }
-
-    return menu;
-}
-
