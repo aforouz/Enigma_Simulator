@@ -352,13 +352,16 @@ static struct LastModifyConfig get_log_config() {
 			}
 		}
 		fclose(fp);
-		
-		return _config;
 	}
+	return _config;
 }
 
 
-
+int main() {
+	struct LastModifyConfig conf;
+	conf = get_log_config();
+	printf("%u %u %u\n", conf.last_R1, conf.last_R2, conf.last_R3);
+}
 
 
 
