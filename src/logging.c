@@ -1,5 +1,10 @@
 // should be logged in this format:
 //	<Timestamp-LogLevel-Source-Message(result)-StackTrace>
+//------------------------------------------------------------
+//                      declarations
+//------------------------------------------------------------
+
+
 
 #include "config.h"
 // declarations included in config.h(main header)
@@ -12,7 +17,33 @@
 bool machine_mode = true;
 
 
-// should define globaly
+
+//-------------------------------------------------------------------------
+//these were in the header file but due to some bugs i moved them here , Ahmd
+enum Level {
+    INFO, // 0
+    WARNING, // 1                               
+    ERROR, //2
+	MACHINE_CHANGE_MODE // 3
+};
+
+enum Level level_number(int _lvl) {
+    return _lvl;
+};
+
+struct LogStruct {//arguments of writing
+    char _date[SIZE];
+    char _time[SIZE];
+    char _file_name[SIZE];
+    char _stage[SIZE];
+    char _input[SIZE];
+    char _output[SIZE];
+    enum Level _level;
+};
+//-------------------------------------------------------------------------
+
+
+// should  be defined globaly
 char r1[26] = {'C', 'X', 'F', 'G', 'E', 'V', 'A', 'H', 'N', 'M', 'B', 'D', 'L', 'K', 'P', 'O', 'Z', 'T', 'Q', 'J', 'I', 'W', 'S', 'R', 'U', 'Y'};
 char r2[26] = {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'};
 char r3[26] = {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'};
@@ -38,11 +69,12 @@ enum Level _project_status_check(char *input, char *output) {
 	// check project workflow safety
 	int log_status_number = 0; // INFO as default
 
+	//This was a bug so the team decided to remove it
 	// ERROR status:
-	if (strcmp(input, output) == 0) {
-		printf("\x1b[41m Input and output are both same, some error occurred in the Enigma algorithm\n");
-		log_status_number = 2;
-	}
+	//if (strcmp(input, output) == 0) {
+		//printf("\x1b[41m Input and output for plugboard are both same, There is no change in the Enigma algorithm\x1b[0m\n");
+		// log_status_number = 2;
+	//}
 
 	// ERROR status
 	if ((input == NULL) || (output == NULL)) {
@@ -50,33 +82,42 @@ enum Level _project_status_check(char *input, char *output) {
 		log_status_number = 2;
 	}
 
+	
+    //--------------------------------------------------important
 	// checking logs directory
-	DIR *directory;
-	struct dirent *entry;
+    // for this section we need to run this solution on a linux based system
+	// in windows we dont have the libraries!!! in these check for erors in the 
+	// log folder so we can comment them 
+    //--------------------------------------------------important
 
-	directory = opendir("../logs");
 
-	if (directory == NULL) {
-		printf("\x1b[41m There is not any log directory\n");
-		log_status_number = 2;
-		return log_status_number;
-	} else {
-		while((entry = readdir(directory)) != NULL) {
-			if (entry->d_type == DT_REG) {
-				if(strcmp(entry->d_name, "machine_logs.log") != 0) {
-					log_status_number = 1;
-					printf("\x1b[41m There is another file exists in the /log folder\n");
-				}
-			}
 
-			if ((entry->d_type == DT_DIR)
-					&& (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)) 
-			{
-				log_status_number = 1;
-				printf("\x1b[41m There is an uknown folder in the /log directory\n");
-			}
-		}
-	}
+	// DIR *directory;
+	// struct dirent *entry;
+
+	// directory = opendir("../logs");
+
+	// if (directory == NULL) {
+	// 	printf("\x1b[41m There is not any log directory\n");
+	// 	log_status_number = 2;
+	// 	return log_status_number;
+	// } else {
+	// 	while((entry = readdir(directory)) != NULL) {
+	// 		if (entry->d_type == DT_REG) {
+	// 			if(strcmp(entry->d_name, "machine_logs.log") != 0) {
+	// 				log_status_number = 1;
+	// 				printf("\x1b[41m There is another file exists in the /log folder\n");
+	// 			}
+	// 		}
+
+	// 		if ((entry->d_type == DT_DIR)
+	// 				&& (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)) 
+	// 		{
+	// 			log_status_number = 1;
+	// 			printf("\x1b[41m There is an uknown folder in the /log directory\n");
+	// 		}
+	// 	}
+	// }
 
 	return level_number(log_status_number);
 }
@@ -254,7 +295,7 @@ unsigned int _indexOF(char c, char arr[])
 	this function is precisely based on the Pauseable system design pattern.
 */
 void change_mode(char *last_input, char *last_output) {
-	char last_stage[SIZE] = "Plugin2"; // known as last stage
+	char last_stage[SIZE] = "Plugin"; // known as last stage
 
 	struct LogStruct log_data;
 	log_data = _log_status_generator(last_input, last_output, last_stage);
@@ -264,6 +305,7 @@ void change_mode(char *last_input, char *last_output) {
 	char *extracted_data;
     // replace and mark the last log to the config
     // when it wants to be turned off
+
     if(machine_mode) {
     	extracted_data = _formatter(log_data, format_status);
     	_writeLog(extracted_data);
@@ -277,7 +319,7 @@ void change_mode(char *last_input, char *last_output) {
     // bool end_flag = !machine_mode;
     // void* machine_mode = &end_flag;
     // printf("test\n");
-    return;
+    
 }
 
 /*
@@ -329,6 +371,8 @@ static struct LastModifyConfig get_log_config() {
 
 	int read_line = _get_line_count();
 
+	//printf("%d %d %d\n", LAST_R1, LAST_R2, LAST_R3);
+
 	if((fp = fopen("../logs/machine_logs.log", "r")) != NULL) {
 		int line = 1;
 		
@@ -355,11 +399,11 @@ static struct LastModifyConfig get_log_config() {
 }
 
 // NOTE: this main should be deleted.
-int main() {
-	struct LastModifyConfig conf;
-	conf = get_log_config();
-	printf("%u %u %u\n", conf.last_R1, conf.last_R2, conf.last_R3);
-}
+// int main() {
+// 	struct LastModifyConfig conf;
+// 	conf = get_log_config();
+// 	printf("%u %u %u\n", conf.last_R1, conf.last_R2, conf.last_R3);
+// }
 
 
 

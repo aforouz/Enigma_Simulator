@@ -20,7 +20,7 @@
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
-// #include <conio.h>
+#include <conio.h>
 #include <ctype.h>
 #include <stdbool.h>
 
@@ -44,7 +44,7 @@
 #define manual_set 2
 
 //for file
-FILE *fpt;
+//FILE *fpt;
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -69,6 +69,7 @@ extern bool machine_mode;
 // @custom : we assume that the reflector is a constant rotor so we have 4 rotors
 // @note A simulation for rotors of machine
 // @dev A replacement for a struct could be more efficient
+/*
 struct Rotor
 {
     int Position;
@@ -76,8 +77,15 @@ struct Rotor
     char ArrRotor[26];//Every rotor has a set of 26 possible outputs i.e. "A-->z"
 };
 typedef struct Rotor Rotor;//unpro naming but anyway we call our instances "Rotor" 
+*/
+typedef struct
+{
+    int Position;
+    int ShiftChar;
+    char ArrRotor[26];//Every rotor has a set of 26 possible outputs i.e. "A-->z"
+} Rotor;
 
-// extern Rotor RotorsArr[4];
+
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                       PLUG_IN_PORTS
@@ -111,6 +119,16 @@ void login();
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                 Function_Prototypes _verification.c
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//           i.e. : func declerations used in verification.c
+
+
+bool signin(char *_username, char *_password);
+bool signup(char *_username, char *_password);
+
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                 Function_Prototypes _mode.c
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //           i.e. : func declerations used in mode.c
@@ -119,6 +137,14 @@ void login();
 //MUST BE CALLED FOR SELECTING MODE
 int select_mode();
 
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                 Function_Prototypes _log_table.c
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//           i.e. : func declerations used in log_table.c
+
+
+void indicate_data_generated(char *data);
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -154,7 +180,7 @@ int indexof(char c, char arr[]);
 // @param InputChar specifies wethear the rotor needs to shift or not
 // @param check tells the function wethear to print the output or not
 // @returns The ASCII number of the rotors output character minus rotor's position
-int pre_reflector(Rotor *rotor, int Input, int InputChar, int check);
+int pre_reflector(Rotor *rotor, int Input, int InputChar);
 
 // @note After passing the reflector, it is time to go back through the rotors
 // @dev Is there anyway to call the rotors more efficiently?
@@ -175,7 +201,7 @@ void config(Rotor RotorsArr[4], char plugboard[26]);
 // @notice: Use this function during the Enigma algorithm workflow when you reach to the 
 //   last section of encryption. (for log/config handling).
 //     It will change the global `is_last_operation` variable in did.
-void change_mode();
+void change_mode(char *last_input, char *last_output);
 
 // 
 void enigma(int selected_mode, Rotor RotorsArr[4], char ArrPlug[26]);
@@ -246,34 +272,35 @@ int morse_to_index(const char*);
 
 
 
-// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-//                          LOGGING_CODE_HEADER
-// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
-                       //DECLARATIONS MADE BY P.AMINPOUR
+// // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+// //                          LOGGING_CODE_HEADER
+// // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                        //DECLARATIONS MADE BY P.AMINPOUR
 
-// 
+// // 
 void logging(char *input, char *output, char *stage);
 
-enum Level {
-    INFO, // 0
-    WARNING, // 1                               
-    ERROR, //2
-    MACHINE_CHANGE_MODE // 3
-};
 
-enum Level level_number(int _lvl) {
-    return _lvl;
-};
+//these moved to the "logging.c" file
+// enum Level {
+//     INFO, // 0
+//     WARNING, // 1                               
+//     ERROR //2
+// };
 
-struct LogStruct {
-    char _date[SIZE];
-    char _time[SIZE];
-    char _file_name[SIZE];
-    char _stage[SIZE];
-    char _input[SIZE];
-    char _output[SIZE];
-    enum Level _level;
-};
+// enum Level level_number(int _lvl) {
+//     return _lvl;
+// };
+
+// struct LogStruct {
+//     char _date[SIZE];
+//     char _time[SIZE];
+//     char _file_name[SIZE];
+//     char _stage[SIZE];
+//     char _input[SIZE];
+//     char _output[SIZE];
+//     enum Level _level;
+// };
 
 #endif//Enjoy the comment system
 //thanks Solidity :D  

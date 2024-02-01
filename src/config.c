@@ -48,16 +48,12 @@ char *inputString(FILE *fp, size_t size)
     return realloc(str, sizeof(*str) * len);
 }
 
-int pre_reflector(Rotor *rotor, int input, int InputChar, int check)
+int pre_reflector(Rotor *rotor, int input, int InputChar)
 {
+
     if ((*rotor).ShiftChar == InputChar)
     {
         (*rotor).Position = ((*rotor).Position + 1) % 26;
-
-        if (check == char_mode)
-        {
-            printf("%d\t", (*rotor).Position);
-        }
     }
 
     if (input + (*rotor).Position < 0)
@@ -86,7 +82,7 @@ int post_reflector(Rotor *rotor, int input)
     return indexof(input + 65, (*rotor).ArrRotor) - (*rotor).Position;
 }
 
-char plugboard(char c, char arr[])
+char plugboard(char c, char* arr)
 {
     return arr[c - 65];
 }
@@ -164,9 +160,9 @@ void rotorinit(Rotor rotor_array[3], Rotor *default_rotors, int n)
     int first_rotor_position = 0, second_rotor_position = 0, third_rotor_position = 0;
     int second_rotor_shift = 0, third_rotor_shift = 0;
 
-    printf("Which rotor do you want to use as the first one? (Choose a number between 1 and %d)\n", n + 1);
+    printf("Which rotor do you want to use as the first one? (Choose a number between 1 and %d)\n", n);
     while (!(1 <= first_rotor && first_rotor <= n) &&
-           (default_rotors[first_rotor].Position == -1))
+           (default_rotors[first_rotor].Position != -1))
     {
         printf("Please enter a valid number that is not removed (1 <= number <= %d)\n", n);
         scanf("%d", &first_rotor);
@@ -175,24 +171,23 @@ void rotorinit(Rotor rotor_array[3], Rotor *default_rotors, int n)
     printf("GREAT, now enter the number of second rotor you want to use:\n");
     while (!(1 <= second_rotor && second_rotor <= n) &&
            second_rotor != first_rotor &&
-           (default_rotors[second_rotor].Position == -1))
+           (default_rotors[second_rotor].Position != -1))
     {
-        printf("Don't forget to enter a valid number! (1 <= number <= %d and not equal to first rotor and not removed)\n");
+        printf("Don't forget to enter a valid number! (1 <= number <= %d and not equal to first rotor and not removed)\n",n);
         scanf("%d", &second_rotor);
     }
 
     printf("Now it's time to choose which rotor to use for the third rotor:\n");
-    while (!(1 <= second_rotor &&
-           second_rotor <= n) &&
+    while (!(1 <= third_rotor && third_rotor <= n) &&
            third_rotor != first_rotor &&
            third_rotor != second_rotor &&
-           (default_rotors[third_rotor].Position == -1))
+           (default_rotors[third_rotor].Position != -1))
     {
-        printf("Just a reminder to enter a valid number! (1 <= number <= %d and not equal to first and second rotor)\n");
-        scanf("%d", third_rotor);
+        printf("Just a reminder to enter a valid number! (1 <= number <= %d and not equal to first and second rotor)\n",n);
+        scanf("%d", &third_rotor);
     }
 
-    printf("Do me a favor and enter the first rotor's position number: (it should be between 1 and 27):\n");
+    printf("Do me a favor and enter the first rotor's position number: (it should be between 1 and 26):\n");
     while (!(1 <= first_rotor_position &&
            first_rotor_position <= 26))
     {
@@ -212,7 +207,7 @@ void rotorinit(Rotor rotor_array[3], Rotor *default_rotors, int n)
     while (!(1 <= third_rotor_position &&
            third_rotor_position <= 26))
     {
-        printf("THE NUMBER SHOULD BE BETWEEN 1 AND 27, REMEMBER!\n");
+        printf("THE NUMBER SHOULD BE BETWEEN 1 AND 26, REMEMBER!\n");
         scanf("%d", &third_rotor_position);
     }
 
@@ -334,6 +329,7 @@ int select_settings()
 
         if(menu==2)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
         printf("Enter Manually\n");
+        printf("\x1B[0m   ");
 
         input=getch();
     }
@@ -341,17 +337,18 @@ int select_settings()
     return menu;
 }
 
-void config(Rotor RotorsArr[4], char ArrPlug[26])
+void config(Rotor *RotorsArr, char ArrPlug[26])
 {
     int n = 5;
     Rotor *default_rotors;
     default_rotors = (Rotor *)calloc(n, (sizeof(Rotor)));
 
-    Rotor r1 = {0, -1, {'C', 'X', 'F', 'G', 'E', 'V', 'A', 'H', 'N', 'M', 'B', 'D', 'L', 'K', 'P', 'O', 'Z', 'T', 'Q', 'J', 'I', 'W', 'S', 'R', 'U', 'Y'}};
-    Rotor r2 = {0, -1, {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}};
-    Rotor r3 = {0, -1, {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'}};
-    Rotor r4 = {0, -1, {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'}};
-    Rotor r5 = {0, -1, {'V', 'Z', 'B', 'R', 'G', 'I', 'T', 'Y', 'U', 'P', 'S', 'D', 'N', 'H', 'L', 'X', 'A', 'W', 'M', 'J', 'Q', 'O', 'F', 'E', 'C', 'K'}};
+    Rotor r1 = {0, 'A', {'C', 'X', 'F', 'G', 'E', 'V', 'A', 'H', 'N', 'M', 'B', 'D', 'L', 'K', 'P', 'O', 'Z', 'T', 'Q', 'J', 'I', 'W', 'S', 'R', 'U', 'Y'}};
+    Rotor r2 = {0, 'B', {'E', 'K', 'M', 'F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}};
+    Rotor r3 = {0, 'C', {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'}};
+    Rotor r4 = {0, 'D', {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'}};
+    Rotor r5 = {0, 'E', {'V', 'Z', 'B', 'R', 'G', 'I', 'T', 'Y', 'U', 'P', 'S', 'D', 'N', 'H', 'L', 'X', 'A', 'W', 'M', 'J', 'Q', 'O', 'F', 'E', 'C', 'K'}};
+    Rotor reflector = {0, 27, {'A', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'Y', 'T'}};
 
     default_rotors[0] = r1;
     default_rotors[1] = r2;
@@ -359,44 +356,55 @@ void config(Rotor RotorsArr[4], char ArrPlug[26])
     default_rotors[3] = r4;
     default_rotors[4] = r5;
 
-    add_remove_rotor(default_rotors, &n);
+    // //getting the setting from log
+    // File *config_loading_conf_c ;
+    // config_loading_conf_c = fopen("../logs/machine_logs.log", "r");//try to open the log
+    // if(config_loading_conf_c !=NULL)//if the log wasnt empty:then read 
+
+
+     add_remove_rotor(default_rotors, &n);
 
     int settings_mode = select_settings();
 
     switch (settings_mode)
     {
     case file_set:
-        int *first_rotor, *second_rotor, *third_rotor;
-        int *first_rotor_position, *second_rotor_position, *third_rotor_position;
+        int first_rotor, second_rotor, third_rotor;
+        int first_rotor_position, second_rotor_position, third_rotor_position;
 
-        read_settings(n, first_rotor, second_rotor, third_rotor, 
-                      first_rotor_position, second_rotor_position, 
-                      third_rotor_position, ArrPlug);
+
+        read_settings(n, &first_rotor, &first_rotor_position,
+                          &second_rotor, &second_rotor_position,
+                          &third_rotor, &third_rotor_position, ArrPlug);
         
-        
-        if (default_rotors[--*first_rotor].Position == -1)
+        if (default_rotors[--first_rotor].Position == -1)
         {
-            printf("The %d rotor you chose was deleted!\n", *first_rotor + 1);
+            printf("The %d rotor you chose was deleted!\n", first_rotor + 1);
             exit(0);
         }
 
-        if (default_rotors[--*second_rotor].Position == -1)
+        if (default_rotors[--second_rotor].Position == -1)
         {
-            printf("The %d rotor you chose was deleted!\n", *second_rotor + 1);
+            printf("The %d rotor you chose was deleted!\n", second_rotor + 1);
             exit(0);
         }
 
-        if (default_rotors[--*third_rotor].Position == -1)
+        if (default_rotors[--third_rotor].Position == -1)
         {
-            printf("The %d rotor you chose was deleted!\n", *third_rotor + 1);
+            printf("The %d rotor you chose was deleted!\n", third_rotor + 1);
             exit(0);
         }
 
-        default_rotors[*first_rotor].Position  = --*first_rotor_position;
+        default_rotors[first_rotor].Position  = first_rotor_position;
 
-        default_rotors[*second_rotor].Position = --*second_rotor_position;
+        default_rotors[second_rotor].Position = second_rotor_position;
 
-        default_rotors[*third_rotor].Position  = --*third_rotor_position;
+        default_rotors[third_rotor].Position  = third_rotor_position;
+
+        RotorsArr[0] = default_rotors[first_rotor];
+        RotorsArr[1] = default_rotors[second_rotor];
+        RotorsArr[2] = default_rotors[third_rotor];
+        RotorsArr[3] = reflector;
 
 
         break;
