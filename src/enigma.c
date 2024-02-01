@@ -25,10 +25,7 @@
 
 void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 {
-    char *output_string;
-    int back;
     int former_output;
-    size_t counter = 0;
 
     switch (selected_mode)
     {
@@ -36,7 +33,6 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
     case (char_mode):
     {
         bool show=true;
-        int i;
         char c, back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
         char table[10];//for log_table
 
@@ -143,7 +139,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
         bool show=false;
         //due to problems this was changed to static
         char user_input[1001],output_string[1001]={};
-        char c, back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
+        char back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
 
         string_try:
         printf("\nEnter your string in one line , without spaces (max:1000ch):");
@@ -271,7 +267,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
         while (1)
         {
             char temp = fgetc(input_file);
-            char c, back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
+            char back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
             if(temp==EOF)break;
 
             if ((temp >= 'A' && temp <= 'Z') || (temp >= 'a' && temp <= 'z'))

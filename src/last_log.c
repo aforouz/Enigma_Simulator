@@ -14,7 +14,7 @@ void _read_log(Rotor *RotorsArr,int r1,int r2,int r3)
 
         system("cls");
 
-        printf("\x1B[33mLast Log File is Exist Do You Want Continue From Log?\n");
+        printf("\x1B[33mLast Log File Exists Do You Want Continue From Log?\n");
         printf("Use Up/Down Key And Press Enter\x1B[0m\n\n");
 
         if(menu==1)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
@@ -61,8 +61,7 @@ void check_last_log(Rotor *RotorsArr)
 
 void save_rotor_posisions(Rotor *RotorsArr)
 {
-    char temp[10];
-
+    char temp[20];
     sprintf(temp,"Rotors:(%d,%d,%d)\n",RotorsArr[0].Position,RotorsArr[1].Position,RotorsArr[2].Position);
     _writeLog(temp);
 }

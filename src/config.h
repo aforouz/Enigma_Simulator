@@ -16,7 +16,6 @@
 #include <string.h>
 #include <assert.h>
 #include <stdbool.h>
-#include <dirent.h>
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
