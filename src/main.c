@@ -1,10 +1,10 @@
 //               ,---------------------------,    --------------------
-//               |  /---------------------\  |   | Parsa Aminpour     |
-//               | |                       | |   | Mohammad Kazemainy |
-//               | |     Welcome to        | |   | Alireza Ahmadi     |
-//               | |      Enigma           | |   | Mohammad Siamaki   |
-//               | |       Machine         | |   | Mohammad Ebrahimian|
-//               | |                       | |   | Ali Jafari         |
+//               |  /---------------------\  |   | Parsa Aminpour     |   2024_University of Technology in Isfahan.
+//               | |                       | |   | Mohammad Kazemainy |    Departement of Mathematical Sciences.
+//               | |     Welcome to        | |   | Alireza Ahmadi     |    
+//               | |      The Enigma       | |   | Mohammad Siamaki   |    Open-Source. Any kind of usage permitted... .
+//               | |       Machine         | |   | Mahdi Ebrahimian   |
+//               | |                  2024 | |   | Ali Jafari         |
 //               |  \_____________  _ 1402/  |   | Hossein Keyghobadi |
 //               |___________IUT_____________|    --------------------
 //             ,---\_____     []     _______/------,
@@ -12,42 +12,44 @@
 //         /___________________________________ /  | ___
 //         |          Math Department          |   |    )
 //         |  _ _ _                 [-------]  |   |   (
-//         |  o o o                 [-------]  |  /    _)_
-//         |__________________________________ |/     /  /
-//     /-------------------------------------/|      ( )/
-//   /U/S/E/-/E/N/I/G/M/A/-/M/A/C/H/I/N/E/-/ /
-//  /A/N/D/-/S/A/Y/-/H/I/-/H/I/T/L/E/R/-/-/ /
+//         |  o o o                 [-------]  |  /    _)_             THE QUIETER YOU BECOME , THE MORE YOU ARE ABLE TO HEAR.... .
+//         |__________________________________ |/     /  /             ------------------------------------------------------------
+//     /-------------------------------------/|      ( )/                   -- KALI LINUX   - RUMI
+//   /U/S/E/-/E/N/I/G/M/A/-/M/A/C/H/I/N/E/-/ /                                
+//  /A/N/D/-/S/A/Y/-/H/A/I/L/-/H/I/T/L/E/R/
+
+                                                                                  
 
 
-
-
-
-
-
-// ###############################################
-//                DRIVER_CODE
-// ###############################################
+// ###################################################################
+//                           DRIVER_CODE
+// ###################################################################
+// @note: This part calls all of the internal functions and runs the machine.
 
 // ############################################### DECLARATIONS
 
-#include "config.h"
+#include "config.h"//Header well-documented.
+
 
 int main(void)
 {
-    // ##################CLI AND MENU
-    // Show welcome page and ask password
+    // ########################################## CLI AND MENU
+    // Show welcome page and ask username & password
     login();
 
-    // 
-    Rotor RotorsArr[4];
-    char ArrPlug[26];
+    // ########################################## MEMORY RESERVATION
 
-    // 
-    config(RotorsArr, ArrPlug);
+    Rotor RotorsArr[4];//Four rotors and one reflector
+    char ArrPlug[26];//Plugboard Array
 
-    // Select input/output mode
-    int selected_mode = select_mode();
+    // ########################################## Setting Configuration
 
+    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration 
+  
+    int selected_mode = select_mode(); // Select input/output mode
+
+    // ########################################## Main Algorithm
+    
     enigma(selected_mode, RotorsArr, ArrPlug);
 
     return 0;

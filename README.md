@@ -52,11 +52,34 @@ Please read "usage.txt" before installation and use.
 This machine has three different types of input/output.
 And two different types of configuration.
 The machine will recover the latest config.
-In the first start you will be asked to setup the machine completely
+In the first start you will be asked to setup the machine completely.
 
+- Main driver source code :
 ```c
+#include "config.h"//Header well-documented.
+
+
 int main(void)
 {
+    // ########################################## CLI AND MENU
+    // Show welcome page and ask username & password
+    login();
+
+    // ########################################## MEMORY RESERVATION
+
+    Rotor RotorsArr[4];//Four rotors and one reflector
+    char ArrPlug[26];//Plugboard Array
+
+    // ########################################## Setting Configuration
+
+    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration 
+  
+    int selected_mode = select_mode(); // Select input/output mode
+
+    // ########################################## Main Algorithm
+    
+    enigma(selected_mode, RotorsArr, ArrPlug);
+
     return 0;
 }
 ```
@@ -78,10 +101,11 @@ int main(void)
 - Encrypted Username and password.
 - Well adjusted requests.
 - Username and password Verification .
+- Username and password check
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot]([![Screenshot-2024-01-31-220310.png](https://i.postimg.cc/0QHNzxFJ/Screenshot-2024-01-31-220310.png)](https://postimg.cc/JDZ8gw11))
 
 
 ## Authors
