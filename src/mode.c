@@ -48,5 +48,7 @@ int select_mode()
         input = getch();
     }
 
+    printf("\x1B[0m");
+
     return menu;
 }

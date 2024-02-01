@@ -27,17 +27,5 @@ void indicate_data_generated(char *data) {
         else printf("    %c     | ",data[i]);
     }
 
-    printf("\x1b[0m");
+    printf("\x1b[0m\n\n");
 }
-
-
-// Sample input
-#define SIZE_STR 101
-int main() {
-    char input_data[SIZE_STR];
-    gets(input_data);
-
-    indicate_data_generated(input_data);
-
-}
-

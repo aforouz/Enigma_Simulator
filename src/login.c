@@ -46,7 +46,7 @@ void login()
         input=getch();
     }
 
-    printf("\nUser Name (max:100ch):");
+    printf("\x1B[0m\nUser Name (max:100ch):");
     gets(user);
     printf("Password (max:100ch):");
 
@@ -69,16 +69,22 @@ void login()
 
     if(menu==1 && signin(user,pass)==0)
     {
-        printf("Press Any Key To Try Again");
+        printf("\nPress Any Key To Try Again");
         getch();
         goto try_again;
     }
 
     if(menu==2)
     {
-        signup(user,pass);
-        printf("Press Any Key To Sign in");
-        getch();
+        if(signup(user,pass)==1)
+        {
+            printf("\nPress Any Key To Sign in");
+            getch();
+        }
+        else{
+            printf("\nPress Any Key To Restart");
+            getch();
+        }      
         goto try_again;
     }
 }
