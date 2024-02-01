@@ -53,6 +53,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             }
 
             plug_board_temp[0] = plugboard(c,ArrPlug);
+            plug_board_temp[1]='\0';
             string_temp[0] = c;
             string_temp[1]  = '\0';
             
@@ -122,6 +123,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
             
             plug_board_temp[0] = plugboard(back , ArrPlug);
+            plug_board_temp[1]='\0';
             string_temp[0] = back;
             change_mode(string_temp , plug_board_temp,show);
             table[9]=plugboard(back,ArrPlug);
@@ -228,6 +230,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
             
             plug_board_temp[0] = plugboard(back+65 , ArrPlug);
+            plug_board_temp[1]='\0';
             string_temp[0] = back+65;
             string_temp[1] = '\0';
             change_mode(string_temp , plug_board_temp,show);
