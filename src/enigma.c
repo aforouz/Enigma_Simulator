@@ -356,11 +356,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             }
         }
 
-        printf("output.txt Is Ready\n");
-        getch();
-
         fclose(input_file);
         fclose(output_file);
+
+        printf("output.txt Is Ready\n");
+        getch();
 
         break;
     }
