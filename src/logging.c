@@ -126,7 +126,7 @@ struct LogStruct _log_status_generator(char *input, char *output, char *stage) {
 	If the (_status_code -> 0) then the log is on the INFO status.
 	If the (_status_code -> 1) then the log is on the WARNING status.
 	If the (_status_code -> 2) then the log is on the ERROR status which if this status occured, the function will exit via ExitCode=1.
-	If the (_status_code -> 2) is the `START / END` status of the machine workflow.
+	If the (_status_code -> 3) is the `START / END` status of the machine workflow.
 		this status code will come up once before runninng the machine and once after ending the machine encryption process. 
 		this status code will occur if we call the `change_mode` function.
 /*
@@ -328,8 +328,6 @@ static struct LastModifyConfig get_log_config() {
 	FILE *fp;
 
 	int read_line = _get_line_count();
-
-	printf("%d %d %d\n", LAST_R1, LAST_R2, LAST_R3);
 
 	if((fp = fopen("../logs/machine_logs.log", "r")) != NULL) {
 		int line = 1;

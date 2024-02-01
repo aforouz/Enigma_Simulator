@@ -1,8 +1,8 @@
 //               ,---------------------------,    --------------------
-//               |  /---------------------\  |   | Parsa Aminpour     |   2024_University of Technology in Isfahan.
+//               |  /---------------------\  |   | Parsa Aminpour     |   2024_Isfahan University of Technology
 //               | |                       | |   | Mohammad Kazemainy |    Departement of Mathematical Sciences.
 //               | |     Welcome to        | |   | Alireza Ahmadi     |    
-//               | |      The Enigma       | |   | Mohammad Siamaki   |    Open-Source. Any kind of usage permitted... .
+//               | |      The Enigma       | |   | Mohammad Siamaki   |    Open-Source. Any kind of usage permitted...
 //               | |       Machine         | |   | Mahdi Ebrahimian   |
 //               | |                  2024 | |   | Ali Jafari         |
 //               |  \_____________  _ 1402/  |   | Hossein Keyghobadi |

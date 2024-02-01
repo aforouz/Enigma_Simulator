@@ -257,7 +257,8 @@ void logging(char *input, char *output, char *stage);
 enum Level {
     INFO, // 0
     WARNING, // 1                               
-    ERROR //2
+    ERROR, //2
+    MACHINE_CHANGE_MODE // 3
 };
 
 enum Level level_number(int _lvl) {
