@@ -138,6 +138,31 @@ bool signup(char *_username, char *_password);
 int select_mode();
 
 
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                 Function_Prototypes _finish.c
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//           i.e. : func declerations used in finish.c
+
+
+void finish();
+
+
+
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//                 Function_Prototypes _last_log.c
+// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+//           i.e. : func declerations used in last_log.c
+
+
+void check_last_log(Rotor *RotorsArr);
+void save_rotor_posisions();
+
+//INTERNAL FUNCTION FROM logging.c
+void _writeLog(char *_formatted_data);
+
+
+
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 //                 Function_Prototypes _log_table.c
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -201,7 +226,7 @@ void config(Rotor RotorsArr[4], char plugboard[26]);
 // @notice: Use this function during the Enigma algorithm workflow when you reach to the 
 //   last section of encryption. (for log/config handling).
 //     It will change the global `is_last_operation` variable in did.
-void change_mode(char *last_input, char *last_output);
+void change_mode(char *last_input, char *last_output, bool show);
 
 // 
 void enigma(int selected_mode, Rotor RotorsArr[4], char ArrPlug[26]);
@@ -278,7 +303,7 @@ int morse_to_index(const char*);
 //                        //DECLARATIONS MADE BY P.AMINPOUR
 
 // // 
-void logging(char *input, char *output, char *stage);
+void logging(char *input, char *output, char *stage, bool show);
 
 
 //these moved to the "logging.c" file

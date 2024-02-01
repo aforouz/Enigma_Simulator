@@ -9,16 +9,11 @@ void login()
 
     while(1)
     {
-        if(input==27)//Esc key
-        {
-            printf("\n\nProgram Exited! Bye:)");
-            exit(0);
-        }
         if(input==13)break;
         if(input==80)menu++;
         if(input==72)menu--;
-        if(menu>2)menu=1;
-        if(menu==0)menu=2;
+        if(menu>3)menu=1;
+        if(menu==0)menu=3;
 
         system("cls");
         printf("\x1B[0m\x1B[31m       ***          \x1B[0m\x1B[47m                                                                                                            \x1B[0m \x1B[31m       ***          \x1B[0m\n");
@@ -35,7 +30,7 @@ void login()
         printf("                                   *******************************************************************************\n\n\n\x1B[0m");
 
 
-        printf("\x1B[33mUse Up/Down Key And Press Enter Or Esc\x1B[0m\n\n");
+        printf("\x1B[33mUse Up/Down Key And Press Enter\x1B[0m\n\n");
 
         if(menu==1)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
         printf("Sign in\n");
@@ -43,7 +38,18 @@ void login()
         if(menu==2)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
         printf("Sign up\n");
 
+        if(menu==3)printf("\x1B[32m-> ");else printf("\x1B[0m   ");
+        printf("Exit\n");
+
         input=getch();
+    }
+
+    if(menu==3)
+    {
+        printf("\x1B[0m");
+        printf("\n\nProgram Exited! Bye:)");
+        getch();
+        exit(0);
     }
 
     printf("\x1B[0m\nUser Name (max:100ch):");
@@ -55,7 +61,7 @@ void login()
         input=getch();
         if(input==13)//Enter key
         {
-            pass[++i]='\0';
+            pass[i]='\0';
             break;
         }
         if(input==27)//Esc key

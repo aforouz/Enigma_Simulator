@@ -32,7 +32,7 @@ char* _encrypting(char *_username, char *_password) {
 	encrypted = enigma_in_func(mixed, strlen(mixed));
 	strcat(encrypted, "\n");
 
-	printf("en -> %s\n", encrypted);
+	printf(" encrypted -> %s\n", encrypted);
 
 	return encrypted;
 }
@@ -93,7 +93,7 @@ static bool _check_password_strength(const char *_password) {
 */
 static bool _user_has_already_registered(char *_data_encrypted) {
 	FILE *fp;
-	fp = fopen("../encrypted_data/db.txt", "r");
+	fp = fopen("./machine_files/db.txt", "r");
 
 	char data[MAX_LEN];
 
@@ -123,32 +123,32 @@ static bool _user_has_already_registered(char *_data_encrypted) {
 /* @param _password is the new password that user gives us (which will be evaluated via `_check_password_strength` function).
 /* @returns noting and will just append encrypted mixed username-password in `/encrypted_data/db.txt` file.
 */
-void signup(char *_username, char *_password) {
+bool signup(char *_username, char *_password) {
 	if(!_check_password_strength(_password)) {
-		printf("\x1b[31mThe password is too week!\n");
-		exit(1);
+		printf("\n\x1b[31mThe password is too week!\n\x1b[0m");
+		return 0;
 	}
 
 	char *encrypted = _encrypting(_username, _password);
 
 	if(_user_has_already_registered(encrypted)) {
-		printf("\x1b[31mThis user information have been registered before!\n");
-		exit(1);
+		printf("\n\x1b[31mThis user information have been registered before!\n\x1b[0m");
+		return 0;
 	}
 
 	// store this encrypted data to a cloud database or an internal DB
 	FILE *data_store;
 	
-	data_store = fopen("../encrypted_data/db.txt", "a");
+	data_store = fopen("./machine_files/db.txt", "a");
 
 	if (data_store == NULL) {
-		printf("\x1b[41m The file doesn't exists in the encrypted_data folder!\n");
-		exit(1);
+		printf("\n\x1b[41m The file doesn't exists in the encrypted_data folder!\n\x1b[0m");
+		return 0;
 	} else fputs(encrypted, data_store);
 
 	fclose(data_store);
 
-	return;
+	return 1;
 }
 
 
@@ -163,7 +163,7 @@ void signup(char *_username, char *_password) {
 bool signin(char *_username, char *_password) {
 	// mixing the username and password.
 	FILE *fp;
-	fp = fopen("../encrypted_data/db.txt", "r");
+	fp = fopen("./machine_files/db.txt", "r");
 
 	char *encrypted = _encrypting(_username, _password);
 

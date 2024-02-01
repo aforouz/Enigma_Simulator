@@ -4,7 +4,7 @@ void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n
 {
     FILE *sets;
 
-    sets=fopen("settings.txt","r");
+    sets=fopen("./machine_files/settings.txt","r");
 
     if(sets==NULL)
     {
@@ -15,7 +15,7 @@ void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n
 
     if(fscanf(sets,"Enter Each Rotor Number,Position: Rotor1: %d,%d Rotor2: %d,%d Rotor3: %d,%d",r1n,r1p,r2n,r2p,r3n,r3p)!=6)
     {
-        printf("settings.txt Not Correct!!!");
+        printf("settings.txt Not Correct(Rotor)!!!");
         getch();
         exit(0);
     }
@@ -52,7 +52,7 @@ void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n
         {
             if(sscanf(line,"(%c:%c)",&a,&b)!=2 || !isupper(a) || !isupper(b))
             {
-                printf("settings.txt Not Correct!!!");
+                printf("settings.txt Not Correct(PlugBoard)!!!");
                 getch();
                 exit(0);
             }

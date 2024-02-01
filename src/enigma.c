@@ -35,6 +35,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
     case (char_mode):
     {
+        bool show=true;
         int i;
         char c, back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
         char table[10];//for log_table
@@ -59,7 +60,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             string_temp[0] = c;
             string_temp[1]  = '\0';
             
-            change_mode(string_temp,plug_board_temp);
+            change_mode(string_temp,plug_board_temp,show);
             c=plugboard(c, ArrPlug);
             
             table[1]=c;
@@ -71,7 +72,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             string_temp_R1[0] = back+65;
             string_temp_R1[1] = '\0';
 
-            logging(string_temp , string_temp_R1,"R1");//logging for first rotor
+            logging(string_temp , string_temp_R1,"R1",show);//logging for first rotor
             // now str_temp is user input 
             //  str_temp_R1 is the output 
             
@@ -85,11 +86,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 string_temp_R2 [0] = back+65;
                 string_temp_R2 [1] = '\0';
 
-                if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2");string_temp_R1[0] = string_temp_R2[0];}
+                if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2",show);string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3");  string_temp_R1[0] = string_temp_R2[0];}
+                if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref");string_temp_R1[0] = string_temp_R2[0];}
+                if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
 
                 
             }
@@ -105,11 +106,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 string_temp_R2 [0] = back+65;
                 string_temp_R2 [1] = '\0';
 
-                if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3"); string_temp_R1[0] =string_temp_R2[0];}
+                if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3",show); string_temp_R1[0] =string_temp_R2[0];}
 
-                if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2"); string_temp_R1[0] = string_temp_R2[0];}
+                if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1"); string_temp_R1[0] = string_temp_R2[0];}
+                if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
                 
             }
 
@@ -119,14 +120,14 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             string_temp_R1[0] = back;
             string_temp_R1[1] = '\0';
 
-            logging(string_temp , string_temp_R1,"R1");//logging for first rotor
+            logging(string_temp , string_temp_R1,"R1",show);//logging for first rotor
             // now str_temp is user input 
             //  str_temp_R1 is the output
 
             
             plug_board_temp[0] = plugboard(back , ArrPlug);
             string_temp[0] = back;
-            change_mode(string_temp , plug_board_temp);
+            change_mode(string_temp , plug_board_temp,show);
             table[9]=plugboard(back,ArrPlug);
 
             indicate_data_generated(table);
@@ -139,11 +140,10 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
     case (str_mode):
     {
+        bool show=false;
         //due to problems this was changed to static
         char user_input[1001],output_string[1001]={};
         char c, back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
-
-        gets(user_input);
 
         string_try:
         printf("\nEnter your string in one line , without spaces (max:1000ch):");
@@ -175,13 +175,14 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             
             
             //change mode to on
-            change_mode(string_temp,plug_board_temp);
+            change_mode(string_temp,plug_board_temp,show);
             
             
             back = pre_reflector(&RotorsArr[0], user_input[j] - 65, RotorsArr[0].ShiftChar);
+            if (back < 0)back += 26;else back %= 26;
             string_temp_R1[0] = back+65;
             string_temp_R1[1] = '\0';
-            logging(plug_board_temp , string_temp_R1 , "R1");
+            logging(plug_board_temp , string_temp_R1 , "R1",show);
             
 
             for (size_t i = 1; i < 4; i++)
@@ -190,14 +191,15 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i-1].Position]);
                 
                 //
+                if (back < 0)back += 26;else back %= 26;
                 string_temp_R2 [0] = back+65;
                 string_temp_R2 [1] = '\0';
 
-                if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2");string_temp_R1[0] = string_temp_R2[0];}
+                if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2",show);string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3");  string_temp_R1[0] = string_temp_R2[0];}
+                if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref");string_temp_R1[0] = string_temp_R2[0];}
+                if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
                 
             }
 
@@ -208,14 +210,15 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 //char rotor_temp[3];
                 //sprintf(rotor_temp,"R%d",i+2);
                 // logging(former_output + 65, back + 65, rotor_temp);
+                if (back < 0)back += 26;else back %= 26;
                 string_temp_R2 [0] = back+65;
                 string_temp_R2 [1] = '\0';
 
-                if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3"); string_temp_R1[0] =string_temp_R2[0];}
+                if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3",show); string_temp_R1[0] =string_temp_R2[0];}
 
-                if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2"); string_temp_R1[0] = string_temp_R2[0];}
+                if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1"); string_temp_R1[0] = string_temp_R2[0];}
+                if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
             }
 
             if (back < 0)
@@ -231,12 +234,14 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             plug_board_temp[0] = plugboard(back+65 , ArrPlug);
             string_temp[0] = back+65;
             string_temp[1] = '\0';
-            change_mode(string_temp , plug_board_temp);
-            
+            change_mode(string_temp , plug_board_temp,show);
+
+            output_string[j]=plugboard(back+65 , ArrPlug);         
         }
         
 
         puts(output_string);
+        printf("Continue?");
         getch();
 
         break;
@@ -244,19 +249,22 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
     case (file_mode):
     {
+        bool show=false;
         FILE *input_file,*output_file;
 
-        input_file = fopen("input.txt", "r");
+        input_file = fopen("./machine_files/input.txt", "r");
         if (input_file == NULL)
         {
             printf("input.txt Not Found!!!");
+            getch();
             exit(0);
         }
 
-        output_file = fopen("output.txt", "w");
+        output_file = fopen("./machine_files/output.txt", "w");
         if (input_file == NULL)
         {
             printf("output.txt Cant't Be Created!!!");
+            getch();
             exit(0);
         }
 
@@ -283,15 +291,16 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 temp=plugboard(temp, ArrPlug);
                 
 
-                change_mode(string_temp , plug_board_temp);
+                change_mode(string_temp , plug_board_temp,show);
                 
 
                 back = pre_reflector(&RotorsArr[0], temp - 65, RotorsArr[0].ShiftChar);
                 //
+                if (back < 0)back += 26;else back %= 26;
                 string_temp_R1[0] = back+65;
 
                 // first rotor logging
-                logging (plug_board_temp , string_temp_R1,"R1");
+                logging (plug_board_temp , string_temp_R1,"R1",show);
 
 
 
@@ -299,15 +308,15 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 {
 
                     back = pre_reflector(&RotorsArr[i], back, RotorsArr[i - 1].ArrRotor[RotorsArr[i-1].Position]);
-        
+                    if (back < 0)back += 26;else back %= 26;
                     string_temp_R2 [0] = back+65;
                     string_temp_R2 [1] = '\0';
 
-                    if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2");string_temp_R1[0] = string_temp_R2[0];}
+                    if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2",show);string_temp_R1[0] = string_temp_R2[0];}
 
-                    if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3");  string_temp_R1[0] = string_temp_R2[0];}
+                    if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
 
-                    if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref");string_temp_R1[0] = string_temp_R2[0];}
+                    if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
 
                 }
 
@@ -316,15 +325,15 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                     former_output = back;
                     back = post_reflector(&RotorsArr[i], back); 
 
-                    
+                    if (back < 0)back += 26;else back %= 26;
                     string_temp_R2 [0] = back+65;
                     string_temp_R2 [1] = '\0';
 
-                    if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3"); string_temp_R1[0] =string_temp_R2[0];}
+                    if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3",show); string_temp_R1[0] =string_temp_R2[0];}
 
-                    if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2"); string_temp_R1[0] = string_temp_R2[0];}
+                    if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
 
-                    if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1"); string_temp_R1[0] = string_temp_R2[0];}
+                    if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
                 }
 
                 if (back < 0)
@@ -343,10 +352,13 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             plug_board_temp[1] = '\0';
             string_temp[0] = back+65;
             string_temp[1] = '\0';
-            change_mode(string_temp , plug_board_temp);
+            change_mode(string_temp , plug_board_temp,show);
             
             }
         }
+
+        printf("output.txt Is Ready\n");
+        getch();
 
         fclose(input_file);
         fclose(output_file);
@@ -354,7 +366,5 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
         break;
     }
 
-    default:
-        break;
     }
 }

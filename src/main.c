@@ -44,13 +44,22 @@ int main(void)
 
     // ########################################## Setting Configuration
 
-    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration 
-  
-    int selected_mode = select_mode(); // Select input/output mode
+    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration
 
-    // ########################################## Main Algorithm
-    
-    enigma(selected_mode, RotorsArr, ArrPlug);
+    check_last_log(RotorsArr);
+
+    while (1)
+    {
+        int selected_mode = select_mode(); // Select input/output mode
+
+        // ########################################## Main Algorithm
+        
+        enigma(selected_mode, RotorsArr, ArrPlug);
+
+        save_rotor_posisions(RotorsArr);
+
+        finish();
+    }
 
     return 0;
 }

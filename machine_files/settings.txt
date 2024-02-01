@@ -1,0 +1,27 @@
+Enter Each Rotor Number,Position:
+
+Rotor1: 3,0
+Rotor2: 5,0
+Rotor3: 1,0
+
+Enter Plugboard Connections:
+
+*
+(A:B)
+(Z:Y)
+*
+
+//////////////////////////////////////////
+Usage:
+
+Rotor(n): Number,Position
+
+*
+(PlugBoardConnection1:PlugBoardConnection2)
+...
+*
+
+No PlugBoard Sample:
+
+*
+*

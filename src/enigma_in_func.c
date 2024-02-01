@@ -38,11 +38,6 @@ void config(Rotor rotors[], char PlugBoard[]);
 
 //second_part
 
-Rotor R1 = {0, 'a', {'E', 'K', 'M','F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}};
-Rotor R2 = {0, 'A', {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'}};
-Rotor R3 = {0, 'C', {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'}};
-Rotor Ref = {0, 'n', {'Y', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'A', 'T'}};
-
 int IndexOf(char c, char arr[])
 {
     for (int i = 0; i < 26; i++)
@@ -89,6 +84,11 @@ int BackRotorCall(Rotor *rotor, int input)
 // #define DEBUG_OUTPUT 
 char* enigma_in_func(char *c, int _n)
 {
+    Rotor R1 = {0, 'a', {'E', 'K', 'M','F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}};
+    Rotor R2 = {0, 'A', {'A', 'J', 'D', 'K', 'S', 'I', 'R', 'U', 'X', 'B', 'L', 'H', 'W', 'T', 'M', 'C', 'Q', 'G', 'Z', 'N', 'P', 'Y', 'F', 'V', 'O', 'E'}};
+    Rotor R3 = {0, 'C', {'B', 'D', 'F', 'H', 'J', 'L', 'C', 'P', 'R', 'T', 'X', 'V', 'Z', 'N', 'Y', 'E', 'I', 'W', 'G', 'A', 'K', 'M', 'U', 'S', 'Q', 'O'}};
+    Rotor Ref = {0, 'n', {'Y', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'A', 'T'}};
+
     int i = 0 ;
     char *encypted_data = (char*) malloc(_n * sizeof(char));
 
@@ -117,17 +117,3 @@ char* enigma_in_func(char *c, int _n)
     }
     return encypted_data;
 }
-
-//Usage example
-
-// in another file we have:
-
-// #define SIZE 2048
-// //#include "enigma_in_func.c"
-// int main(void)
-// {
-//    char array[SIZE]  = {'A','A'};
-//    puts(enigma_in_func(array));
-//    return 0;
-
-// }

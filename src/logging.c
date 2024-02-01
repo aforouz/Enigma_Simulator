@@ -9,7 +9,6 @@
 #include "config.h"
 // declarations included in config.h(main header)
 
-#define DEBUG_OUTPUT 0
 #define MAX_LEN 1000
 #define MAX_LINES 100
 
@@ -172,7 +171,7 @@ struct LogStruct _log_status_generator(char *input, char *output, char *stage) {
 		this status code will occur if we call the `change_mode` function.
 /*
 */
-char* _formatter(struct LogStruct _log, enum Level _status_code) {
+char* _formatter(struct LogStruct _log, enum Level _status_code, bool show) {
 	char *data_formatted = (char*)malloc(BUFFER_SIZE * sizeof(char));
 
 	switch(_status_code) {
@@ -181,27 +180,21 @@ char* _formatter(struct LogStruct _log, enum Level _status_code) {
 				_log._time, _log._file_name, _log._stage, _log._input, _log._output
 			);
 
-			#ifdef DEBUG_OUTPUT
-			printf("\x1b[32m%s", data_formatted);
-			#endif
+			if(show)printf("\x1b[32m%s", data_formatted);
 			break;
 
 		case 1: // WARNING log level
 			sprintf(data_formatted, "[WARNING]--%s--%s--%s--%s--%s\n",
 				_log._time, _log._file_name, _log._stage, _log._input, _log._output
 			);
-			#ifdef DEBUG_OUTPUT
-			printf("x1b[33m%s", data_formatted);
-			#endif
+			if(show)printf("x1b[33m%s", data_formatted);
 			break;
 
 		case 2: // ERROR log level
 			sprintf(data_formatted, "[ERROR]--%s--%s--%s--%s--%s\n",
 				_log._time, _log._file_name, _log._stage, _log._input, _log._output
 			);
-			#ifdef DEBUG_OUTPUT
-			printf("\x1b[31m%s", data_formatted);
-			#endif
+			if(show)printf("\x1b[31m%s", data_formatted);
 			break;
 
 		case 3: //machine mode status switching
@@ -210,17 +203,13 @@ char* _formatter(struct LogStruct _log, enum Level _status_code) {
 					_log._time, _log._file_name, _log._stage, _log._input, _log._output
 				);
 
-				#ifdef DEBUG_OUTPUT
-				printf("\n\x1b[38;5;78m%s\n", data_formatted);
-				#endif
+				if(show)printf("\n\x1b[38;5;78m%s\n", data_formatted);
 			} else {
 				sprintf(data_formatted, "[END]--%s--%s--%s--%s--%s\n",
 					_log._time, _log._file_name, _log._stage, _log._input, _log._output
 				);
 
-				#ifdef DEBUG_OUTPUT
-				printf("\n\x1b[38;5;203m%s\n", data_formatted);
-				#endif
+				if(show)printf("\n\x1b[38;5;203m%s\n", data_formatted);
 			}
 	};
 
@@ -237,10 +226,11 @@ void _writeLog(char *_formatted_data) {
 	FILE *log_file;
 
 	// opening file in append format
-	log_file = fopen("../logs/machine_logs.log", "a");
+	log_file = fopen("./machine_files/machine_logs.log", "a");
 
 	if (log_file == NULL) {
 		printf("\x1b[41m The file doesn't exists in the log folder!\n");
+		getch();
 		exit(1);
 	} else fputs(_formatted_data, log_file);
 
@@ -253,7 +243,7 @@ static int _get_line_count() {
 	int count;
 	char c;
 
-	if ((fp = fopen("../logs/machine_logs.log", "r")) != NULL) {
+	if ((fp = fopen("./machine_files/machine_logs.log", "r")) != NULL) {
 		while (!feof(fp) && !ferror(fp) && c != EOF) {
 			c = fgetc(fp);
 			if(c == '\n') count ++;
@@ -264,6 +254,7 @@ static int _get_line_count() {
 
 	fclose(fp);
 	printf("\x1b[31mSome error occured during machine_logs file opening!\n");
+	getch();
 	exit(1);
 }
 
@@ -294,7 +285,7 @@ unsigned int _indexOF(char c, char arr[])
 /* @notice This function should only use once before machine start and once after machine close.
 	this function is precisely based on the Pauseable system design pattern.
 */
-void change_mode(char *last_input, char *last_output) {
+void change_mode(char *last_input, char *last_output, bool show) {
 	char last_stage[SIZE] = "Plugin"; // known as last stage
 
 	struct LogStruct log_data;
@@ -307,11 +298,11 @@ void change_mode(char *last_input, char *last_output) {
     // when it wants to be turned off
 
     if(machine_mode) {
-    	extracted_data = _formatter(log_data, format_status);
+    	extracted_data = _formatter(log_data, format_status, show);
     	_writeLog(extracted_data);
     	machine_mode = !machine_mode;
     } else {
-    	extracted_data = _formatter(log_data, format_status);
+    	extracted_data = _formatter(log_data, format_status, show);
     	_writeLog(extracted_data);
     	machine_mode = !machine_mode;
     }
@@ -332,14 +323,14 @@ void change_mode(char *last_input, char *last_output) {
 /* @returns Nothing and log the formatted data into the `/log/machine_log.log` file.
 /* @dev if the DEBUG_OUTPUT was 0 the formatted log data will either print simultenuosly beside of the `machine_log.log` file.  
 */
-void logging(char *input, char *output, char *stage) {
+void logging(char *input, char *output, char *stage, bool show) {
 	struct LogStruct log_data;
 	log_data = _log_status_generator(input, output, stage);
 
 	if (log_data._level == 2) 
 		exit(1);
 	else {
-		char *extracted_data = _formatter(log_data, log_data._level);
+		char *extracted_data = _formatter(log_data, log_data._level, show);
 
 		_writeLog(extracted_data);
 	}
@@ -373,7 +364,7 @@ static struct LastModifyConfig get_log_config() {
 
 	//printf("%d %d %d\n", LAST_R1, LAST_R2, LAST_R3);
 
-	if((fp = fopen("../logs/machine_logs.log", "r")) != NULL) {
+	if((fp = fopen("./machine_files/machine_logs.log", "r")) != NULL) {
 		int line = 1;
 		
 		char data_in_file[MAX_LINES][MAX_LEN];
