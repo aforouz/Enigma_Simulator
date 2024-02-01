@@ -35,7 +35,7 @@ int main(void)
 {
     // ########################################## CLI AND MENU
     // Show welcome page and ask username & password
-    //login();
+    login();
 
     // ########################################## MEMORY RESERVATION
 
