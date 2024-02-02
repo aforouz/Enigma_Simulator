@@ -1,5 +1,21 @@
-#include "config.h"
+//+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ Mode_Selector
 
+
+//+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+//               Declarations
+//+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+#include "config.h"
+//---------------------------
+
+
+//+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+//                 Main_Func
+//+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+// @title select_mode
+// @dev1 This function is called after login menu to choose an operaating mode
+// @dev2 An internal function for CLI.
+// @param Nothing,just call it
+// @returns an int for the selected mode 
 int select_mode()
 {
     int input = 0, menu = 1;
@@ -8,8 +24,8 @@ int select_mode()
     {
         if (input == 27) // Esc key
         {
-            printf("\n\nProgram Exited! Bye:)");
-            getch();
+            printf("\n\nProgram Exited! Bye :)");
+            (getch());
             exit(0);
         }
         if (input == 13)
@@ -23,7 +39,7 @@ int select_mode()
         if (menu == 0)
             menu = 3;
 
-        system("cls");
+        system("cls");//clear the Konsole
 
         printf("\x1B[33mNow Simulator Is Ready Please Select Mode\n");
         printf("Use Up/Down Key And Press Enter Or Esc\x1B[0m\n\n");
@@ -52,4 +68,4 @@ int select_mode()
     printf("\x1B[0m");
 
     return menu;
-}
+}//End of File

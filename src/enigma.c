@@ -3,7 +3,7 @@
 
 //MAIN_ALGORITHM_FOR_ENIGMA_CODE
 
-// @tile   : Main algorithm
+// @tile   : Main algorithm Source
 // @author : CO-authored..
 // @notice : the algorithm works fine,but it is not optimized
 //           and it will be changed... .
@@ -14,15 +14,20 @@
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 //                      DECLARATIONS
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
 #include "config.h"
 
-
-
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-//                      DRIVER_CODE
+//                       MAIN_FUNC
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 
-
+//@title enigma
+//@author co-authored
+//@dev can be called main algorithm it drives both encrypting and
+//     decrypting
+//@param1 selected mode returned by selcted_mode func (in a source file)
+//@param2 an array of rotors output array
+//@param3 an array of character changes in plugboard
 void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 {
     int former_output;

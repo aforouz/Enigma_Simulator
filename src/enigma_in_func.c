@@ -90,7 +90,8 @@ char* enigma_in_func(char *c, int _n)
     Rotor Ref = {0, 'n', {'Y', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'A', 'T'}};
 
     int i = 0 ;
-    char *encypted_data = (char*) malloc(_n * sizeof(char));
+    char *encypted_data = (char*) calloc(_n , sizeof(char));
+    
 
     for (int i = 0; c[i]; i++)
     {
