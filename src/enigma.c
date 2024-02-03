@@ -3,12 +3,12 @@
 
 //MAIN_ALGORITHM_FOR_ENIGMA_CODE
 
-// @tile   : Main algorithm Source
+// @tile   : Main algorithm Source File
 // @author : CO-authored..
-// @notice : the algorithm works fine,but it is not optimized
-//           and it will be changed... .
-// @dev    : Function prototypes are provided in the headers
+// @dev    : Function prototypes are provided in the header files
 // @custom : None
+// @param  : None
+// @returns: None
 
 
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
@@ -145,7 +145,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
     {
         bool show=false;
         //due to problems this was changed to static
-        char user_input[1001],output_string[1001]={};
+        char user_input[1001],output_string[1001];
         char back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
 
         string_try:
@@ -210,9 +210,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             {
                 former_output = back;
                 back = post_reflector(&RotorsArr[i], back);
-                //char rotor_temp[3];
-                //sprintf(rotor_temp,"R%d",i+2);
-                // logging(former_output + 65, back + 65, rotor_temp);
+                
                 if (back < 0)back += 26;else back %= 26;
                 string_temp_R2 [0] = back+65;
                 string_temp_R2 [1] = '\0';
@@ -245,7 +243,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
         
 
         puts(output_string);
-        printf("Continue?");
+        printf("Continue? ");
         getch();
 
         break;
@@ -365,7 +363,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
         fclose(output_file);
 
         printf("output.txt Is Ready\n");
-        getch();
+        assert(getch());
 
         break;
     }

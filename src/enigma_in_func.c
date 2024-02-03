@@ -10,6 +10,8 @@
 //             decryption 
 // @notice  :  For changing the configuration you have to do it
 //             manually in this source file  
+// @param takes an array of characters as input for machine
+// @returns an array containing the encrypted data 
 // @function prototype : const char* enigma_in_func(char *c)
 
 //first_part
@@ -80,8 +82,19 @@ int BackRotorCall(Rotor *rotor, int input)
     return IndexOf(input+65, (*rotor).ArrRotor) - (*rotor).Position;
 }
 
-//Function i wrote :
-// #define DEBUG_OUTPUT 
+
+// @title   :  Enigma_In_Func                 
+// @author  :  Ahmadi                           
+// @dev     :  Usage example is included at the end of file
+//             this function is an example of how ENIGMA works
+//             and therefore not much configuration can be done..
+//             but this can be used for a quick encryption or
+//             decryption 
+// @notice  :  For changing the configuration you have to do it
+//             manually in this source file  
+// @param takes an array of characters as input for machine
+// @returns an array containing the encrypted data 
+// @function prototype : const char* enigma_in_func(char *c) 
 char* enigma_in_func(char *c, int _n)
 {
     Rotor R1 = {0, 'a', {'E', 'K', 'M','F', 'L', 'G', 'D', 'Q', 'V', 'Z', 'N', 'T', 'O', 'W', 'Y', 'H', 'X', 'U', 'S', 'P', 'A', 'I', 'B', 'R', 'C', 'J'}};
@@ -118,3 +131,4 @@ char* enigma_in_func(char *c, int _n)
     }
     return encypted_data;
 }
+//EOF

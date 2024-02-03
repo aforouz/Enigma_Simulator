@@ -68,6 +68,5 @@ void read_settings(int rotor_number,int *r1n,int *r1p,int *r2n,int *r2p,int *r3n
 
     fclose(sets);
 
-    // for(int i=0;i<=25;i++)plugs[i]-='A';
-}
+}//End of File
 

@@ -22,6 +22,7 @@
 #include <conio.h>
 #include <ctype.h>
 #include <stdbool.h>
+//#include <dirent.h>
 
 //#include <regex.h>
 
@@ -97,7 +98,6 @@ typedef struct
 
 //MUST BE CALLED BEFORE EVERYTHING TO ACCESS SIMULATOR
 void login();
-
 
 
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
@@ -221,7 +221,5 @@ void enigma(int selected_mode, Rotor RotorsArr[4], char ArrPlug[26]);
 void logging(char *input, char *output, char *stage, bool show);
 
 #endif//Enjoy the comment system
-//thanks Solidity :D  
-
-
+//thanks Solidity :D
 //End of file... .

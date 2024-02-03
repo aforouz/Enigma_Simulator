@@ -155,22 +155,20 @@ struct LogStruct _log_status_generator(char *input, char *output, char *stage) {
 }
 
 
-/*
-/* NOTE: Internal function!
-/* @dev Not useable for the outside of this file.
-/* @param _log which is the machine log structure that generated from the `_log_status_generator` function.
-/* @param _status_code is the enum Level status of the log to generate proportional log format.
-	which is loosely based on the official log reporting in most systems.
-/* returns a formatted string based on this pattern => <DATE>-<TIME>-<FILE>-<STAGE>-<INPUT>-<OUTPUT>
-/* @notice The log of `_formatter` function is based on the _status_code that we are giving to it.
-	If the (_status_code -> 0) then the log is on the INFO status.
-	If the (_status_code -> 1) then the log is on the WARNING status.
-	If the (_status_code -> 2) then the log is on the ERROR status which if this status occured, the function will exit via ExitCode=1.
-	If the (_status_code -> 3) is the `START / END` status of the machine workflow.
-		this status code will come up once before runninng the machine and once after ending the machine encryption process. 
-		this status code will occur if we call the `change_mode` function.
-/*
-*/
+//
+// NOTE: Internal function!
+// @dev Not useable for the outside of this file.
+// @param _log which is the machine log structure that generated from the `_log_status_generator` function.
+// @param _status_code is the enum Level status of the log to generate proportional log format.
+//	which is loosely based on the official log reporting in most systems.
+// returns a formatted string based on this pattern => <DATE>-<TIME>-<FILE>-<STAGE>-<INPUT>-<OUTPUT>
+// @notice The log of `_formatter` function is based on the _status_code that we are giving to it.
+//	If the (_status_code -> 0) then the log is on the INFO status.
+//	If the (_status_code -> 1) then the log is on the WARNING status.
+//	If the (_status_code -> 2) then the log is on the ERROR status which if this status occured, the function will exit via ExitCode=1.
+//	If the (_status_code -> 3) is the `START / END` status of the machine workflow.
+//		this status code will come up once before runninng the machine and once after ending the machine encryption process. 
+//		this status code will occur if we call the `change_mode` function.
 char* _formatter(struct LogStruct _log, enum Level _status_code, bool show) {
 	char *data_formatted = (char*)malloc(BUFFER_SIZE * sizeof(char));
 
@@ -216,12 +214,11 @@ char* _formatter(struct LogStruct _log, enum Level _status_code, bool show) {
 	return data_formatted; // we'll give this to the getLevel function
 }
 
-/*
-/* NOTE: Internal function!
-/* @dev Not useable for the outside of this file.
-/* @param _formatted_data is a string the generated from the `formatter` function.
-/* @returns nothing and just modify the file inside `/log/machine_log.log` file in append mode.
-*/
+
+// NOTE: Internal function!
+// @dev Not useable for the outside of this file.
+// @param _formatted_data is a string the generated from the `formatter` function.
+// @returns nothing and just modify the file inside `/log/machine_log.log` file in append mode.
 void _writeLog(char *_formatted_data) {
 	FILE *log_file;
 
@@ -230,7 +227,7 @@ void _writeLog(char *_formatted_data) {
 
 	if (log_file == NULL) {
 		printf("\x1b[41m The file doesn't exists in the log folder!\n");
-		getch();
+		assert(getch());
 		exit(1);
 	} else fputs(_formatted_data, log_file);
 
@@ -240,8 +237,8 @@ void _writeLog(char *_formatted_data) {
 
 static int _get_line_count() {
 	FILE *fp;
-	int count;
-	char c;
+	int count=0;
+	char c = {0};
 
 	if ((fp = fopen("./machine_files/machine_logs.log", "r")) != NULL) {
 		while (!feof(fp) && !ferror(fp) && c != EOF) {
@@ -254,7 +251,7 @@ static int _get_line_count() {
 
 	fclose(fp);
 	printf("\x1b[31mSome error occured during machine_logs file opening!\n");
-	getch();
+	assert(getch());
 	exit(1);
 }
 
@@ -275,16 +272,15 @@ unsigned int _indexOF(char c, char arr[])
 //                       Useable Functions
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 
-/*
-/* NOTE: This is the only function to modify the machine_mode global variable.
-/* NOTE: Useable and vital function!
-/* @dev use this function during your app to have a logging journy.
-/* @param last_input takes Enigma machine input
-/* @param last_output takes Enigma machine output
-/* @returns Nothing and will change the machine_mode` global variable.
-/* @notice This function should only use once before machine start and once after machine close.
-	this function is precisely based on the Pauseable system design pattern.
-*/
+
+// NOTE: This is the only function to modify the machine_mode global variable.
+// NOTE: Useable and vital function!
+// @dev use this function during your app to have a logging journy.
+// @param last_input takes Enigma machine input
+// @param last_output takes Enigma machine output
+// @returns Nothing and will change the machine_mode` global variable.
+// @notice This function should only use once before machine start and once after machine close.
+//	this function is precisely based on the Pauseable system design pattern.
 void change_mode(char *last_input, char *last_output, bool show) {
 	char last_stage[SIZE] = "Plugin"; // known as last stage
 
@@ -313,16 +309,15 @@ void change_mode(char *last_input, char *last_output, bool show) {
     
 }
 
-/*
-/* NOTE: This is the only function to modify the machine_mode global variable.
-/* NOTE: Useable and vital function!
-/* @dev use this function during your app to have a logging journy.
-/* @param input takes Enigma machine input
-/* @param output takes Enigma machine output
-/* @param stage which is the machine stage level that you are in.
-/* @returns Nothing and log the formatted data into the `/log/machine_log.log` file.
-/* @dev if the DEBUG_OUTPUT was 0 the formatted log data will either print simultenuosly beside of the `machine_log.log` file.  
-*/
+
+// NOTE: This is the only function to modify the machine_mode global variable.
+// NOTE: Useable and vital function!
+// @dev use this function during your app to have a logging journy.
+// @param input takes Enigma machine input
+// @param output takes Enigma machine output
+// @param stage which is the machine stage level that you are in.
+// @returns Nothing and log the formatted data into the `/log/machine_log.log` file.
+// @dev if the DEBUG_OUTPUT was 0 the formatted log data will either print simultenuosly beside of the `machine_log.log` file.  
 void logging(char *input, char *output, char *stage, bool show) {
 	struct LogStruct log_data;
 	log_data = _log_status_generator(input, output, stage);
@@ -350,13 +345,13 @@ struct LastModifyConfig {
 #define LAST_R2 ((_get_line_count())-1)
 #define LAST_R3 ((_get_line_count())-2)
 #define LAST_CHAR_IDX 52
-/*
-/* NOTE: Useable and vital function!
-/* @dev This function could be used before running the Enigma Machine to set the prepotional Rotors position.
-/* @returns a LastModifyConfig struct which is the config that you have to set before running the Enigma Machine.
-*/
+
+// NOTE: Useable and vital function!
+// @dev This function could be used before running the Enigma Machine to set the prepotional Rotors position.
+// @returns a LastModifyConfig struct which is the config that you have to set before running the Enigma Machine.
 static struct LastModifyConfig get_log_config() {
 	struct LastModifyConfig _config;
+	 
 
 	FILE *fp;
 
@@ -395,11 +390,6 @@ static struct LastModifyConfig get_log_config() {
 // 	conf = get_log_config();
 // 	printf("%u %u %u\n", conf.last_R1, conf.last_R2, conf.last_R3);
 // }
-
-
-
-
-
 
 // NOTE: This is just a sample of the logging.c workflow and should be deleted in the production phase.
 // int main() {
