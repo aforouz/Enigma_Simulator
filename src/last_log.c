@@ -1,4 +1,4 @@
-#include "config.h"
+#include "Main.h"
 
 void _read_log(Rotor *RotorsArr,int r1,int r2,int r3)
 {

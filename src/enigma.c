@@ -14,7 +14,7 @@
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
 //                      DECLARATIONS
 //=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
-#include "config.h"
+#include "Main.h"
 
 
 
@@ -140,7 +140,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
     {
         bool show=false;
         //due to problems this was changed to static
-        char user_input[1001],output_string[1001]={};
+        char user_input[1001],output_string[1001]={0};
         char back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
 
         string_try:

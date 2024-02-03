@@ -1,4 +1,4 @@
-#include "config.h"
+#include "Main.h"
 
 int select_mode()
 {

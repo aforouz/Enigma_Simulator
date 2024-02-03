@@ -6,7 +6,7 @@
 
 
 
-#include "config.h"
+#include "Main.h"
 // declarations included in config.h(main header)
 
 #define MAX_LEN 1000

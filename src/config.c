@@ -4,7 +4,7 @@
 // co-authored.contains variable initialization and function exact
 // declarations
 
-#include "config.h"
+#include "Main.h"
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ENIGMA.c
 

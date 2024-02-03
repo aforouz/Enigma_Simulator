@@ -1,23 +1,24 @@
-//               ,---------------------------,    --------------------
-//               |  /---------------------\  |   | Parsa Aminpour     |   2024_Isfahan University of Technology
-//               | |                       | |   | Mohammad Kazemainy |    Departement of Mathematical Sciences.
-//               | |     Welcome to        | |   | Alireza Ahmadi     |    
-//               | |      The Enigma       | |   | Mohammad Siamaki   |    Open-Source. Any kind of usage permitted...
-//               | |       Machine         | |   | Mahdi Ebrahimian   |
-//               | |                  2024 | |   | Ali Jafari         |
-//               |  \_____________  _ 1402/  |   | Hossein Keyghobadi |
-//               |___________IUT_____________|    --------------------
-//             ,---\_____     []     _______/------,
-//           /         /______________\           /|
-//         /___________________________________ /  | ___
-//         |          Math Department          |   |    )
-//         |  _ _ _                 [-------]  |   |   (
-//         |  o o o                 [-------]  |  /    _)_             THE QUIETER YOU BECOME , THE MORE YOU ARE ABLE TO HEAR.... .
-//         |__________________________________ |/     /  /             ------------------------------------------------------------
-//     /-------------------------------------/|      ( )/                   -- KALI LINUX   - RUMI
-//   /U/S/E/-/E/N/I/G/M/A/-/M/A/C/H/I/N/E/-/ /                                
-//  /A/N/D/-/S/A/Y/-/H/A/I/L/-/H/I/T/L/E/R/
-
+/*
+ *               ,---------------------------,    --------------------
+ *               |  /---------------------\  |   | Parsa Aminpour     |     Supervisor: Dr. Forouzandeh
+ *               | |                       | |   | Mohammad Kazemainy |    
+ *               | |     Welcome to        | |   | Alireza Ahmadi     |     Isfahan University of Technology    
+ *               | |      The Enigma       | |   | Mohammad Siamaki   |     Departement of Mathematical Sciences.    
+ *               | |       Machine         | |   | Mahdi Ebrahimian   |
+ *               | |                  2024 | |   | Ali Jafari         |     Open-Source. Any kind of usage permitted...
+ *               |  \_____________  _ 1402/  |   | Hossein Keyghobadi |
+ *               |___________IUT_____________|    --------------------
+ *             ,---\_____     []     _______/------,
+ *           /         /______________\           /|
+ *         /___________________________________ /  | ___
+ *         |          Math Department          |   |    )
+ *         |  _ _ _                 [-------]  |   |   (
+ *         |  o o o                 [-------]  |  /    _)_             THE QUIETER YOU BECOME , THE MORE YOU ARE ABLE TO HEAR.... .
+ *         |__________________________________ |/     /  /             ------------------------------------------------------------
+ *     /-------------------------------------/|      ( )/                   -- KALI LINUX   - RUMI
+ *   /U/S/E/-/E/N/I/G/M/A/-/M/A/C/H/I/N/E/-/ /                                
+ *  /A/N/D/-/S/A/Y/-/H/A/I/L/-/H/I/T/L/E/R/
+ */
                                                                                   
 
 
@@ -28,39 +29,11 @@
 
 // ############################################### DECLARATIONS
 
-#include "config.h"//Header well-documented.
-
+#include "Main.h"
 
 int main(void)
 {
-    // ########################################## CLI AND MENU
-    // Show welcome page and ask username & password
-    login();
-
-    // ########################################## MEMORY RESERVATION
-
-    Rotor RotorsArr[4];//Four rotors and one reflector
-    char ArrPlug[26];//Plugboard Array
-
-    // ########################################## Setting Configuration
-
-    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration
-
-    check_last_log(RotorsArr);
-
-    while (1)
-    {
-        int selected_mode = select_mode(); // Select input/output mode
-
-        // ########################################## Main Algorithm
-        
-        enigma(selected_mode, RotorsArr, ArrPlug);
-
-        save_rotor_posisions(RotorsArr);
-
-        finish();
-    }
-
+    menu();
     return 0;
 }
 // END OF FILE
