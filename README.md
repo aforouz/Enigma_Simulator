@@ -72,16 +72,27 @@ int main(void)
 
     // ########################################## Setting Configuration
 
-    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration 
-  
-    int selected_mode = select_mode(); // Select input/output mode
+    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration
 
-    // ########################################## Main Algorithm
-    
-    enigma(selected_mode, RotorsArr, ArrPlug);
+    check_last_log(RotorsArr);
+
+    while (1)
+    {
+        int selected_mode = select_mode(); // Select input/output mode
+
+        // ########################################## Main Algorithm
+        
+        enigma(selected_mode, RotorsArr, ArrPlug);
+
+        save_rotor_posisions(RotorsArr);
+
+        finish();
+    }
 
     return 0;
 }
+// END OF FILE
+
 ```
 
 
@@ -105,7 +116,7 @@ int main(void)
 
 ## Screenshots
 
-![App Screenshot]([![Screenshot-2024-01-31-220310.png](https://i.postimg.cc/0QHNzxFJ/Screenshot-2024-01-31-220310.png)](https://postimg.cc/JDZ8gw11))
+![App Screenshot]((https://i.postimg.cc/2SHNnjmz/Screenshot-2024-02-07-202522.png)(https://postimg.cc/21BtDDVJ))
 
 
 ## Authors
