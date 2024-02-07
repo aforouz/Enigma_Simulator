@@ -7,7 +7,8 @@
 //// +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+==+=+==+=+=
 
 #pragma once
-
+#define _CRT_NONSTDC_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS/*MSVC*/
 #ifndef configuration
 #define configuration
 
@@ -22,7 +23,7 @@
 #include <conio.h>
 #include <ctype.h>
 #include <stdbool.h>
-//#include <dirent.h>
+#include <dirent.h>
 
 //#include <regex.h>
 

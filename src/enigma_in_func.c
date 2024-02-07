@@ -29,14 +29,8 @@ struct Rotor
 };
 
 typedef struct Rotor Rotor;
-// The RotorInit function will initialize each rotor as we intend to do...
-void Rinit(Rotor rotor, int P, int Rnum, char array[]);
 
-// RotorCall, does the math required to calculate the output character of the specified rotor...
-int ThroughRotorCall(Rotor *rotor, int Input, char InputChar);
 
-// This function is used to configure the Rotors and the Plugboard to encode or decode a letter...
-void config(Rotor rotors[], char PlugBoard[]);
 
 //second_part
 
@@ -103,7 +97,7 @@ char* enigma_in_func(char *c, int _n)
     Rotor Ref = {0, 'n', {'Y', 'R', 'U', 'H', 'Q', 'S', 'L', 'D', 'P', 'X', 'N', 'G', 'O', 'K', 'M', 'I', 'E', 'B', 'F', 'Z', 'C', 'W', 'V', 'J', 'A', 'T'}};
 
     int i = 0 ;
-    char *encypted_data = (char*) calloc(_n , sizeof(char));
+    char *encypted_data = (char*) calloc(_n+1 , sizeof(char));
     
 
     for (int i = 0; c[i]; i++)
@@ -123,9 +117,9 @@ char* enigma_in_func(char *c, int _n)
         {
             back3 %= 26;
         }
-        #ifdef DEBUG_OUTPUT
-        printf("%c", back3+65);
-        #endif
+        //#ifdef DEBUG_OUTPUT
+        //printf("%c", back3+65);
+        //#endif
 
         encypted_data[i] = back3+65;
     }

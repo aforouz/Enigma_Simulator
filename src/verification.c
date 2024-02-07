@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "enigma_in_func.c"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -27,7 +28,7 @@ char* _encrypting(char *_username, char *_password) {
 	char *mixed = strcat(username, password);
 
 	// encrypting username and password using Enigma algorithm
-	char *encrypted = (char*) malloc(strlen(mixed) * sizeof(char));
+	char *encrypted = (char*) calloc(strlen(mixed) , sizeof(char));
 
 	encrypted = enigma_in_func(mixed, strlen(mixed));
 	strcat(encrypted, "\n");
@@ -129,8 +130,10 @@ bool signup(char *_username, char *_password) {
 		return 0;
 	}
 
-	char *encrypted = _encrypting(_username, _password);
-
+	char *encrypted =_encrypting(_username, _password);
+	int i;
+	for (i = 0; encrypted[i]; i++);
+	encrypted[i+1] = '\0';
 	if(_user_has_already_registered(encrypted)) {
 		printf("\n\x1b[31mThis user information have been registered before!\n\x1b[0m");
 		return 0;
@@ -165,9 +168,12 @@ bool signin(char *_username, char *_password) {
 	FILE *fp;
 	fp = fopen("./machine_files/db.txt", "r");
 
-	char *encrypted = _encrypting(_username, _password);
+	char *encrypted =  _encrypting(_username, _password);
+	int i;
+	for (i = 0; encrypted[i]; i++);
+	encrypted[i+1] = '\0';
 
-	char data[MAX_LEN];
+	char data[MAX_LEN] = {0};
 	while(!feof(fp) && !ferror(fp)) {
 		fgets(data, MAX_LEN, fp);
 

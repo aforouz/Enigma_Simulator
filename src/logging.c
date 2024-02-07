@@ -12,6 +12,7 @@
 #define MAX_LEN 1000
 #define MAX_LINES 100
 
+
 // default value when you start using the machine
 bool machine_mode = true;
 
@@ -20,9 +21,9 @@ bool machine_mode = true;
 //-------------------------------------------------------------------------
 //these were in the header file but due to some bugs i moved them here , Ahmd
 enum Level {
-    INFO, // 0
+    INFO=0, // 0
     WARNING, // 1                               
-    ERROR, //2
+    ERR, //2
 	MACHINE_CHANGE_MODE // 3
 };
 
@@ -69,13 +70,13 @@ enum Level _project_status_check(char *input, char *output) {
 	int log_status_number = 0; // INFO as default
 
 	//This was a bug so the team decided to remove it
-	// ERROR status:
+	// ERR status:
 	//if (strcmp(input, output) == 0) {
 		//printf("\x1b[41m Input and output for plugboard are both same, There is no change in the Enigma algorithm\x1b[0m\n");
 		// log_status_number = 2;
 	//}
 
-	// ERROR status
+	// ERR status
 	if ((input == NULL) || (output == NULL)) {
 		printf("\x1b[41m value of input or output is not valid!\n");
 		log_status_number = 2;
@@ -165,7 +166,7 @@ struct LogStruct _log_status_generator(char *input, char *output, char *stage) {
 // @notice The log of `_formatter` function is based on the _status_code that we are giving to it.
 //	If the (_status_code -> 0) then the log is on the INFO status.
 //	If the (_status_code -> 1) then the log is on the WARNING status.
-//	If the (_status_code -> 2) then the log is on the ERROR status which if this status occured, the function will exit via ExitCode=1.
+//	If the (_status_code -> 2) then the log is on the ERR status which if this status occured, the function will exit via ExitCode=1.
 //	If the (_status_code -> 3) is the `START / END` status of the machine workflow.
 //		this status code will come up once before runninng the machine and once after ending the machine encryption process. 
 //		this status code will occur if we call the `change_mode` function.
@@ -188,8 +189,8 @@ char* _formatter(struct LogStruct _log, enum Level _status_code, bool show) {
 			if(show)printf("x1b[33m%s", data_formatted);
 			break;
 
-		case 2: // ERROR log level
-			sprintf(data_formatted, "[ERROR]--%s--%s--%s--%s--%s\n",
+		case 2: // ERR log level
+			sprintf(data_formatted, "[ERR]--%s--%s--%s--%s--%s\n",
 				_log._time, _log._file_name, _log._stage, _log._input, _log._output
 			);
 			if(show)printf("\x1b[31m%s", data_formatted);
@@ -326,6 +327,10 @@ void logging(char *input, char *output, char *stage, bool show) {
 		exit(1);
 	else {
 		char *extracted_data = _formatter(log_data, log_data._level, show);
+		int x;
+		for (x = 0; extracted_data[x]; x++);
+		extracted_data[x + 1] = '\0';
+
 
 		_writeLog(extracted_data);
 	}

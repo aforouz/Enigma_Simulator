@@ -122,7 +122,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             string_temp_R1[0] = back;
             string_temp_R1[1] = '\0';
 
-            logging(string_temp , string_temp_R1,"R1",show);//logging for first rotor
+            //logging(string_temp , string_temp_R1,"R1",show);//logging for first rotor
             // now str_temp is user input 
             //  str_temp_R1 is the output
 
@@ -145,8 +145,8 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
     {
         bool show=false;
         //due to problems this was changed to static
-        char user_input[1001],output_string[1001];
-        char back,plug_board_temp[10],string_temp[10],string_temp_R1[10],string_temp_R2[10];
+        char user_input[1001] = { 0 }, output_string[1001] = { 0 };
+        char back, plug_board_temp[10] = { 0 }, string_temp[10] = { 0 }, string_temp_R1[10] = { 0 }, string_temp_R2[10] = { 0 };
 
         string_try:
         printf("\nEnter your string in one line , without spaces (max:1000ch):");
@@ -362,7 +362,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
         fclose(input_file);
         fclose(output_file);
 
-        printf("output.txt Is Ready\n");
+        printf("output.txt Is Ready\nLocated in machine_files directory");
         assert(getch());
 
         break;

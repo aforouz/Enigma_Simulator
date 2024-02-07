@@ -25,7 +25,7 @@ int select_mode()
         if (input == 27) // Esc key
         {
             printf("\n\nProgram Exited! Bye :)");
-            (getch());
+            getch();
             exit(0);
         }
         if (input == 13)
