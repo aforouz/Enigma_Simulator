@@ -106,8 +106,8 @@ char* enigma_in_func(char *c, int _n)
         int out2 = ThroughRotorCall(&R2, out, R1.ArrRotor[R1.Position]);
         int out3 = ThroughRotorCall(&R3, out2, R2.ArrRotor[R2.Position]);
         int outRef = ThroughRotorCall(&Ref, out3, 'a');
-        int back = BackRotorCall(&R3, outRef);
-        int back2 = BackRotorCall(&R2, back);
+        int temp_rotor_result_ = BackRotorCall(&R3, outRef);
+        int back2 = BackRotorCall(&R2, temp_rotor_result_);
         int back3 = BackRotorCall(&R1, back2);
         if (back3 < 0)
         {

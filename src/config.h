@@ -50,7 +50,7 @@
 // +=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
 // will be decalared as false when the machine turns off and vise versa.
 // @notice: it allows us to use pauseable design pattern too.
-// NOTE: don't change this variable directly. just via its function:`change_mode`.
+// NOTE: don't change this variable directly. just via its function:`glob_machine_change_mode`.
 // #ifndef machine_mode 
 extern bool machine_mode;
 // #endif
@@ -190,7 +190,7 @@ int indexof(char c, char arr[]);
 // @returns The ASCII number of the rotors output character minus rotor's position
 int pre_reflector(Rotor *rotor, int Input, int InputChar);
 
-// @note After passing the reflector, it is time to go back through the rotors
+// @note After passing the reflector, it is time to go temp_rotor_result_ through the rotors
 // @dev Is there anyway to call the rotors more efficiently?
 // @param rotor is the rotor instructed to be used in the machine
 // @param Input is the output of the previous rotor or reflector
@@ -209,7 +209,7 @@ void config(Rotor RotorsArr[4], char plugboard[26]);
 // @notice: Use this function during the Enigma algorithm workflow when you reach to the 
 //   last section of encryption. (for log/config handling).
 //     It will change the global `is_last_operation` variable in did.
-void change_mode(char *last_input, char *last_output, bool show);
+void glob_machine_change_mode(char *last_machine_input, char *last_machine_output, bool show);
 
 // 
 void enigma(int selected_mode, Rotor RotorsArr[4], char ArrPlug[26]);

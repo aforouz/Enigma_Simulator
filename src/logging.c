@@ -131,7 +131,7 @@ enum Level _project_status_check(char *input, char *output) {
 /* @param output takes Enigma machine output
 /* @param stage which is the stage that we are in during the machine encryption workflow.
 /* @returns log_data struct which contains log status value based on the LogStruct structure.
-/* @notice this function will use in `logging` and `change_mode` function to
+/* @notice this function will use in `logging` and `glob_machine_change_mode` function to
 	generate the Enigma machine each stage I/O status based on the `LogStruct` structure.
 */
 struct LogStruct _log_status_generator(char *input, char *output, char *stage) {
@@ -169,7 +169,7 @@ struct LogStruct _log_status_generator(char *input, char *output, char *stage) {
 //	If the (_status_code -> 2) then the log is on the ERR status which if this status occured, the function will exit via ExitCode=1.
 //	If the (_status_code -> 3) is the `START / END` status of the machine workflow.
 //		this status code will come up once before runninng the machine and once after ending the machine encryption process. 
-//		this status code will occur if we call the `change_mode` function.
+//		this status code will occur if we call the `glob_machine_change_mode` function.
 char* _formatter(struct LogStruct _log, enum Level _status_code, bool show) {
 	char *data_formatted = (char*)malloc(BUFFER_SIZE * sizeof(char));
 
@@ -277,16 +277,16 @@ unsigned int _indexOF(char c, char arr[])
 // NOTE: This is the only function to modify the machine_mode global variable.
 // NOTE: Useable and vital function!
 // @dev use this function during your app to have a logging journy.
-// @param last_input takes Enigma machine input
-// @param last_output takes Enigma machine output
+// @param last_machine_input takes Enigma machine input
+// @param last_machine_output takes Enigma machine output
 // @returns Nothing and will change the machine_mode` global variable.
 // @notice This function should only use once before machine start and once after machine close.
 //	this function is precisely based on the Pauseable system design pattern.
-void change_mode(char *last_input, char *last_output, bool show) {
+void glob_machine_change_mode(char *last_machine_input, char *last_machine_output, bool show) {
 	char last_stage[SIZE] = "Plugin"; // known as last stage
 
 	struct LogStruct log_data;
-	log_data = _log_status_generator(last_input, last_output, last_stage);
+	log_data = _log_status_generator(last_machine_input, last_machine_output, last_stage);
 
 	int format_status = level_number(3);
 
@@ -399,7 +399,7 @@ static struct LastModifyConfig get_log_config() {
 // NOTE: This is just a sample of the logging.c workflow and should be deleted in the production phase.
 // int main() {
 // 	// sample input
-// 	change_mode("X", "Z"); // turn on
+// 	glob_machine_change_mode("X", "Z"); // turn on
 
 // 	logging("A", "B", "R1");
 // 	logging("B", "C", "R2");
@@ -409,9 +409,9 @@ static struct LastModifyConfig get_log_config() {
 // 	logging("F", "G", "R2");
 // 	logging("G", "H", "R1");
 
-// 	change_mode("H", "I"); // turn off
+// 	glob_machine_change_mode("H", "I"); // turn off
 // /////////////////////////////////////////////// SECOND ROUND
-// 	change_mode("X", "Z"); // turn on
+// 	glob_machine_change_mode("X", "Z"); // turn on
 
 // 	logging("A", "B", "R1");
 // 	logging("B", "C", "R2");
@@ -421,7 +421,7 @@ static struct LastModifyConfig get_log_config() {
 // 	logging("F", "G", "R2");
 // 	logging("G", "H", "R1");
 
-// 	change_mode("H", "I"); // turn off
+// 	glob_machine_change_mode("H", "I"); // turn off
 
 // 	int n = _get_line_count();
 // 	printf("%d\n", n);
