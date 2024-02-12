@@ -68,7 +68,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             table[1]=c;
 
             
-            temp_rotor_result_ = pre_reflector(&RotorsArr[0], c - 65, RotorsArr[0].ShiftChar);
+            temp_rotor_result_ = pre_reflector(&RotorsArr[0],c - 65, RotorsArr[0].ShiftChar);
             if (temp_rotor_result_ < 0)temp_rotor_result_ += 26;else temp_rotor_result_ %= 26;
             table[2]=temp_rotor_result_+65;
             string_temp_R1[0] = temp_rotor_result_+65;
@@ -88,12 +88,13 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
                 string_temp_R2 [0] = temp_rotor_result_+65;
                 string_temp_R2 [1] = '\0';
 
-                if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2",show);string_temp_R1[0] = string_temp_R2[0];}
+                if (i == 1) { logging(string_temp_R1, string_temp_R2, "R2", show); string_temp_R1[0] = string_temp_R2[0]; }
 
-                if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
+                else if (i == 2) { logging(string_temp_R1, string_temp_R2, "R3", show);  string_temp_R1[0] = string_temp_R2[0]; }
 
-                if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
+                else if (i == 3) { logging(string_temp_R1, string_temp_R2, "Ref", show); string_temp_R1[0] = string_temp_R2[0]; }
 
+                else { printf("Internal Rotor loop ran into a problem , You may want to check it... ."); }
                 
             }
             
@@ -110,10 +111,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
                 if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3",show); string_temp_R1[0] =string_temp_R2[0];}
 
-                if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
+                else if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
+                else if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
                 
+                else { printf("Internal Rotor loop ran into a problem , You may want to check it... ."); }
             }
 
             if (temp_rotor_result_ < 0)temp_rotor_result_ += 26;else temp_rotor_result_ %= 26;
@@ -122,7 +124,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             string_temp_R1[0] = temp_rotor_result_;
             string_temp_R1[1] = '\0';
 
-            //logging(string_temp , string_temp_R1,"R1",show);//logging for first rotor
+            
             // now str_temp is user input 
             //  str_temp_R1 is the output
 
@@ -200,10 +202,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
                 if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2",show);string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
+                else if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
+                else if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
                 
+                else { printf("Internal Rotor loop ran into a problem , You may want to check it... ."); }
             }
 
             for (int i = 2; i > -1; i--)
@@ -217,9 +220,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
                 if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3",show); string_temp_R1[0] =string_temp_R2[0];}
 
-                if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
+                else if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
 
-                if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
+                else if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
+
+                else { printf("Internal Rotor loop ran into a problem , You may want to check it... ."); }
             }
 
             if (temp_rotor_result_ < 0)
@@ -316,9 +321,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
                     if( i  == 1){logging(string_temp_R1 , string_temp_R2 ,"R2",show);string_temp_R1[0] = string_temp_R2[0];}
 
-                    if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
+                    else if( i  ==2 ){logging(string_temp_R1 ,string_temp_R2,"R3",show);  string_temp_R1[0] = string_temp_R2[0];}
 
-                    if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
+                    else if( i  == 3){logging(string_temp_R1 ,string_temp_R2,"Ref",show);string_temp_R1[0] = string_temp_R2[0];}
+
+                    else { printf("Internal Rotor loop ran into a problem , You may want to check it... ."); }
 
                 }
 
@@ -333,9 +340,11 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
 
                     if( i == 2 ){logging(string_temp_R1 ,string_temp_R2 ,"R3",show); string_temp_R1[0] =string_temp_R2[0];}
 
-                    if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
+                    else if( i == 1 ){logging(string_temp_R1 ,string_temp_R2 ,"R2",show); string_temp_R1[0] = string_temp_R2[0];}
 
-                    if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
+                    else if( i == 0 ){logging(string_temp_R1 ,string_temp_R2 ,"R1",show); string_temp_R1[0] = string_temp_R2[0];}
+
+                    else { printf("Internal Rotor loop ran into a problem , You may want to check it... ."); }
                 }
 
                 if (temp_rotor_result_ < 0)
@@ -357,6 +366,7 @@ void enigma(int selected_mode, Rotor *RotorsArr, char *ArrPlug)
             glob_machine_change_mode(string_temp , plug_board_temp,show);
             
             }
+            else { continue; }
         }
 
         fclose(input_file);
