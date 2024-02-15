@@ -12,7 +12,7 @@ The Enigma has an electromechanical rotor mechanism that scrambles the 26 letter
 
 - Installation can be done via downloading a stable release
 
-[View the latest releases available](https://github.com/aforouz/Enigma_Simulator/tags)
+[View the latest releases available](https://github.com/aforouz/Enigma_Simulator/releases/tag/V1.0.0)
 
 Choose a release version and download the .zip file and extract it.
 
