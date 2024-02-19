@@ -1,0 +1,14 @@
+Thank you for chosing our simulator!
+
+1>If you are using Microsoft Visual Studio , add "dirent.h" library provided in src directory to your MSVC include path.And place a copy of machine_files in the
+same directory as your Enigma.exe file...
+
+2>No special format needed for input file mode all letters are extracted one at a time , symbols and numbers are simply ignored 
+
+3>Default username is "admin" and password is :"@1234Admin" ... .
+
+4>The password for any username should contain: (one CAP char) (one low char) (one digit) (one special symbol)...
+
+5>If you want to use the machine history at a startup do not change the setting.txt .
+
+6>Enigma.exe(or any other compiled .exe file) should be in the same directory as machine_files... .    

@@ -6,7 +6,15 @@
 The Enigma machine is a cipher device developed and used in the early- to mid-20th century to protect commercial, diplomatic, and military communication. It was employed extensively by Nazi Germany during World War II, in all branches of the German military. The Enigma machine was considered so secure that it was used to encipher the most top-secret messages.
 
 
-The Enigma has an electromechanical rotor mechanism that scrambles the 26 letters of the alphabet. In typical use, one person enters text on the Enigma's keyboard and another person writes down which of the 26 lights above the keyboard illuminated at each key press. If plain text is entered, the illuminated letters are the ciphertext. Entering ciphertext transforms it back into readable plaintext. The rotor mechanism changes the electrical connections between the keys and the lights with each keypress
+The Enigma has an electromechanical rotor mechanism that scrambles the 26 letters of the alphabet. In typical use, one person enters text on the Enigma's keyboard and another person writes down which of the 26 lights above the keyboard illuminated at each key press. If plain text is entered, the illuminated letters are the ciphertext. Entering ciphertext transforms it back into readable plaintext. The rotor mechanism changes the electrical connections between the keys and the lights with each keypress.
+
+## Installation 
+
+- Installation can be done via downloading a stable release
+
+[View the latest releases available](https://github.com/aforouz/Enigma_Simulator/releases/tag/V1.0.0)
+
+Choose a release version and download the .zip file and extract it.
 
 ## More Information 
 
@@ -72,16 +80,27 @@ int main(void)
 
     // ########################################## Setting Configuration
 
-    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration 
-  
-    int selected_mode = select_mode(); // Select input/output mode
+    config(RotorsArr, ArrPlug);//Rotor and plugboard configuration
 
-    // ########################################## Main Algorithm
-    
-    enigma(selected_mode, RotorsArr, ArrPlug);
+    check_last_log(RotorsArr);
+
+    while (1)
+    {
+        int selected_mode = select_mode(); // Select input/output mode
+
+        // ########################################## Main Algorithm
+        
+        enigma(selected_mode, RotorsArr, ArrPlug);
+
+        save_rotor_posisions(RotorsArr);
+
+        finish();
+    }
 
     return 0;
 }
+// END OF FILE
+
 ```
 
 
@@ -105,7 +124,7 @@ int main(void)
 
 ## Screenshots
 
-![App Screenshot]([![Screenshot-2024-01-31-220310.png](https://i.postimg.cc/0QHNzxFJ/Screenshot-2024-01-31-220310.png)](https://postimg.cc/JDZ8gw11))
+![App Screenshot]((https://i.postimg.cc/2SHNnjmz/Screenshot-2024-02-07-202522.png)(https://postimg.cc/21BtDDVJ))
 
 
 ## Authors
